@@ -20,10 +20,7 @@
 const options = {
   method: "GET",
   headers: {
-    "x-access-token":
-      process.env.COIN_API_KEYS.split(",")[
-        Math.floor(Math.random() * process.env.COIN_API_KEYS.split(",").length)
-      ],
+    "x-access-token": process.env.COIN_API_KEY,
   },
 };
 
