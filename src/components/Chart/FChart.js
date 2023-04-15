@@ -531,6 +531,7 @@ function updateChart() {
 // Chart.register(...registerables);
 //import chartjs 2.9.4
 import Chart from "../../../node_modules/chart.js/dist/Chart.js";
+import Script from "next/script.js";
 
 function FChart() {
   const year = useRef();
@@ -629,7 +630,10 @@ function FChart() {
 
                   ticks: {
                     callback(value) {
-                      return formatCurrency(value);
+                      return formatCurrency(
+                        value,
+                        value > 100000 ? "compact" : "standard"
+                      );
                     },
                     autoSkipPadding: 5,
                   },
@@ -718,7 +722,7 @@ function FChart() {
   }, []);
   return (
     <div className="Chart">
-      <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+      <Script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></Script>
       <div class="chartjs-size-monitor-expand">
         <div class=""></div>
       </div>

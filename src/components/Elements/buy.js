@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { formatCurrency } from "@/helpers";
+import Image from "next/image";
 
 export default function Buy() {
-  const route = useRouter();
-  const coinUuid = route.query.uuid;
+  const router = useRouter();
+  // let coinUuid = router.query.uuid;
 
-  if (!coinUuid) return null;
   const [coinInfo, setCoinInfo] = useState();
   //   console.log(coinUuid);
-  const getCoinInfo = async () => {
+  const getCoinInfo = async (coinUuid) => {
     // return { error: true };
     const data = await fetch(`/api/getCoinInfo?uuid=${coinUuid}`);
     const coin = await data.json();
@@ -17,22 +17,34 @@ export default function Buy() {
   };
 
   useEffect(() => {
-    // fetch(`/api/getCoinInfo?uuid=${coinUuid}`)
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setCoinInfo(data);
-    //   });
+    const coinUuid = window.location.pathname.split("/")[2];
     //get coin info if error wait 5 seconds and try again until success
     const interval = setInterval(async () => {
-      const coin = await getCoinInfo();
+      const coin = await getCoinInfo(coinUuid);
       if (!coin.error) {
         setCoinInfo(coin);
         console.log(coin.price);
         clearInterval(interval);
       } else {
-        console.log("retrying");
+        console.log("retrying", coinUuid, router.query);
       }
     }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    //upadate price every 5 seconds
+    const interval = setInterval(async () => {
+      const coinUuid = window.location.pathname.split("/")[2];
+      const coin = await getCoinInfo(coinUuid);
+      if (!coin.error) {
+        console.log("updating price");
+        setCoinInfo(coin);
+        console.log(coin.price);
+      } else {
+        console.log("retrying", coinUuid);
+      }
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -153,7 +165,7 @@ export default function Buy() {
             justifyContent: "flex-start",
             alignItems: "flex-start",
           }}>
-          <img width={25} height={25} src={coinInfo?.iconUrl} alt="hehe" />
+          <Image width={25} height={25} src={coinInfo?.iconUrl} alt="hehe" />
           <h4 style={{ padding: 5 }}>{coinInfo?.name}</h4>
           <svg
             id="bookmark"

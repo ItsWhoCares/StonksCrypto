@@ -17,9 +17,20 @@
 //   },
 // };
 
+const options = {
+  method: "GET",
+  headers: {
+    "x-access-token":
+      process.env.COIN_API_KEYS.split(",")[
+        Math.floor(Math.random() * process.env.COIN_API_KEYS.split(",").length)
+      ],
+  },
+};
+
 export default async function getCoinInfo(req, res) {
   const data = await fetch(
-    `https://api.coinranking.com/v2/coin/${req.query.uuid}?referenceCurrencyUuid=${process.env.NEXT_PUBLIC_REFERENCE_CURRENCY_UUID}`
+    `https://api.coinranking.com/v2/coin/${req.query.uuid}?referenceCurrencyUuid=${process.env.NEXT_PUBLIC_REFERENCE_CURRENCY_UUID}`,
+    options
   );
   const coin = await data.json();
   //   console.log(coin);

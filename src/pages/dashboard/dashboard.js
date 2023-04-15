@@ -196,7 +196,7 @@ export default function Dashboard() {
                           <ul class="panel__list">
                             {/* first three topcoins only*/}
                             {topCoins.slice(0, 3).map((coin) => (
-                              <li>
+                              <li key={coin?.uuid}>
                                 <Link href={`/coin/${coin.uuid}`}>
                                   <span class="panel__fullname">
                                     <h4>{coin.symbol}</h4>
@@ -236,7 +236,7 @@ export default function Dashboard() {
                         <div class="panel__stockList">
                           <ul class="panel__list">
                             {topCoins.slice(3, 6).map((coin) => (
-                              <li>
+                              <li key={coin?.uuid}>
                                 <Link href={`/coin/${coin.uuid}`}>
                                   <span class="panel__fullname">
                                     <h4>{coin.symbol}</h4>
@@ -276,7 +276,7 @@ export default function Dashboard() {
                         <div class="panel__stockList">
                           <ul class="panel__list">
                             {topCoins.slice(6, 9).map((coin) => (
-                              <li>
+                              <li key={coin?.uuid}>
                                 <Link href={`/coin/${coin.uuid}`}>
                                   <span class="panel__fullname">
                                     <h4>{coin.symbol}</h4>

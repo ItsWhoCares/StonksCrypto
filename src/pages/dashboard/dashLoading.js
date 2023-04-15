@@ -18,8 +18,74 @@ export default function DashLoading() {
       <div class="panel__bottom">
         <div class="panel__stockList">
           <ul class="panel__list">
-            {list.map((item) => (
-              <li>
+            {
+              //repete 3 times
+              list.map((key) => (
+                <li key={key}>
+                  <Link href={`#`}>
+                    <span class="panel__fullname">
+                      <h4>
+                        <div
+                          style={{
+                            width: "6vw",
+                            height: "1.5vh",
+
+                            display: "inline-block",
+                          }}>
+                          <div className="linear-background-dash"></div>
+                        </div>
+                      </h4>
+                      <h6 class="panel__name">
+                        <div
+                          style={{
+                            width: "8vw",
+                            height: "1vh",
+
+                            display: "inline-block",
+                          }}>
+                          <div className="linear-background-dash"></div>
+                        </div>
+                      </h6>
+                    </span>
+                    <div class="panel__list-change">
+                      {/* round to two decimal places */}
+                      <h4>
+                        <div
+                          style={{
+                            width: "6vw",
+                            height: "1.5vh",
+                            display: "inline-block",
+                          }}>
+                          <div className="linear-background-dash"></div>
+                        </div>
+                      </h4>
+
+                      <h5
+                        style={{
+                          color: "rgb(102, 249, 218)",
+                          margin: "5px 0px 0px",
+                          textShadow: "rgba(102, 249, 218, 0.5) 0px 0px 7px",
+                        }}>
+                        <div
+                          style={{
+                            width: "4vw",
+                            height: "1vh",
+                            display: "inline-block",
+                          }}>
+                          <div className="linear-background-dash"></div>
+                        </div>
+                      </h5>
+                    </div>
+                  </Link>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="panel__stockList">
+          <ul class="panel__list">
+            {list.map((key) => (
+              <li key={key}>
                 <Link href={`#`}>
                   <span class="panel__fullname">
                     <h4>
@@ -81,71 +147,8 @@ export default function DashLoading() {
         </div>
         <div class="panel__stockList">
           <ul class="panel__list">
-            {list.map((coin) => (
-              <li>
-                <Link href={`#`}>
-                  <span class="panel__fullname">
-                    <h4>
-                      <div
-                        style={{
-                          width: "6vw",
-                          height: "1.5vh",
-
-                          display: "inline-block",
-                        }}>
-                        <div className="linear-background-dash"></div>
-                      </div>
-                    </h4>
-                    <h6 class="panel__name">
-                      <div
-                        style={{
-                          width: "8vw",
-                          height: "1vh",
-
-                          display: "inline-block",
-                        }}>
-                        <div className="linear-background-dash"></div>
-                      </div>
-                    </h6>
-                  </span>
-                  <div class="panel__list-change">
-                    {/* round to two decimal places */}
-                    <h4>
-                      <div
-                        style={{
-                          width: "6vw",
-                          height: "1.5vh",
-                          display: "inline-block",
-                        }}>
-                        <div className="linear-background-dash"></div>
-                      </div>
-                    </h4>
-
-                    <h5
-                      style={{
-                        color: "rgb(102, 249, 218)",
-                        margin: "5px 0px 0px",
-                        textShadow: "rgba(102, 249, 218, 0.5) 0px 0px 7px",
-                      }}>
-                      <div
-                        style={{
-                          width: "4vw",
-                          height: "1vh",
-                          display: "inline-block",
-                        }}>
-                        <div className="linear-background-dash"></div>
-                      </div>
-                    </h5>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div class="panel__stockList">
-          <ul class="panel__list">
-            {list.map((coin) => (
-              <li>
+            {list.map((key) => (
+              <li key={key}>
                 <Link href={`#`}>
                   <span class="panel__fullname">
                     <h4>

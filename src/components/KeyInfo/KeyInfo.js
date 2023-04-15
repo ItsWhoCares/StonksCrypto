@@ -24,7 +24,7 @@ export default function KeyInfo({ CoinInfo }) {
       }
     }, 5000);
     return () => clearInterval(interval);
-  }, [coinUuid]);
+  }, []);
   //   return (
   //     <div className="stockPage__trade">
   //       <div className="stockPage__mobile">
