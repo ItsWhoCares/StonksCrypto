@@ -35,5 +35,9 @@ export default async function oneMonthData(req, res) {
   //   console.log(coin);
   if (coin.status === "fail") {
     res.status(404).json(coin);
-  } else res.status(200).json(formatToChart(coin.data.history));
+  } else
+    res.status(200).json({
+      chart: formatToChart(coin.data.history),
+      change: coin.data.change,
+    });
 }

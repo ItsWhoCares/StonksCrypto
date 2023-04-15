@@ -11,23 +11,23 @@ export default function Coin() {
   const session = useSession();
   const supabase = useSupabaseClient();
   const [coinInfo, setCoinInfo] = useState();
-  // const getCoinInfo = async () => {
-  //   const res = await fetch(`/api/getCoinInfo?uuid=${router.query.uuid}`);
-  //   const data = await res.json();
-  //   return data;
-  // };
-  // useEffect(() => {
-  //   console.log("hehe");
-  //   const interval = setInterval(async () => {
-  //     const coin = await getCoinInfo();
-  //     if (!coin.error) {
-  //       console.log(coin);
-  //       setCoinInfo(coin);
-  //       clearInterval(interval);
-  //     }
-  //   }, 5000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  const getCoinInfo = async () => {
+    const res = await fetch(`/api/getCoinInfo?uuid=${router.query.uuid}`);
+    const data = await res.json();
+    return data;
+  };
+  useEffect(() => {
+    console.log("hehe");
+    const interval = setInterval(async () => {
+      const coin = await getCoinInfo();
+      if (!coin.error) {
+        console.log(coin);
+        setCoinInfo(coin);
+        clearInterval(interval);
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
   // const coinUuid = router.query.uuid;
   // useEffect(() => {
   //   fetch(`/api/getCoinInfo?uuid=${coinUuid}`)

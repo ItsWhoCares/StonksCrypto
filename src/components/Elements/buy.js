@@ -27,7 +27,10 @@ export default function Buy() {
       const coin = await getCoinInfo();
       if (!coin.error) {
         setCoinInfo(coin);
+        console.log(coin.price);
         clearInterval(interval);
+      } else {
+        console.log("retrying");
       }
     }, 5000);
     return () => clearInterval(interval);

@@ -3,6 +3,8 @@ export function formatCurrency(amount, notation = "standard", currency = null) {
     style: "currency",
     notation: notation,
     currency: currency ?? process.env.NEXT_PUBLIC_REFERENCE_CURRENCY,
+    // roundingPriority: amount < 1 ? "morePrecision" : "auto",
+    maximumFractionDigits: amount < 1 ? 8 : 2,
   }).format(amount);
   return price;
 }

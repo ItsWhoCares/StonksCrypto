@@ -434,6 +434,7 @@
 let symbol;
 let stock_labels = [];
 let stock_data = [];
+let change = 0;
 var chart;
 // const params = new URLSearchParams(window.location.search);
 // console.log(params);
@@ -442,8 +443,9 @@ async function getOneDayChart() {
   return new Promise(async function (resolve) {
     var response = await fetch(`/api/getOneDayData?uuid=${symbol}`);
     var res_data = await response.json();
-    stock_labels = res_data["labels"];
-    stock_data = res_data["data"];
+    stock_labels = res_data.chart["labels"];
+    stock_data = res_data.chart["data"];
+    change = res_data.change;
     resolve();
   });
 }
@@ -452,8 +454,9 @@ async function getOneYearChart() {
   return new Promise(async function (resolve) {
     var response = await fetch(`/api/getOneYearData?uuid=${symbol}`);
     var res_data = await response.json();
-    stock_labels = res_data["labels"];
-    stock_data = res_data["data"];
+    stock_labels = res_data.chart["labels"];
+    stock_data = res_data.chart["data"];
+    change = res_data.change;
     // console.log(data["labels"]);
     chart.data.labels = stock_labels;
     chart.data.datasets.data = stock_data;
@@ -465,8 +468,9 @@ async function getOneMonthChart() {
   return new Promise(async function (resolve) {
     var response = await fetch(`/api/getOneMonthData?uuid=${symbol}`);
     var res_data = await response.json();
-    stock_labels = res_data["labels"];
-    stock_data = res_data["data"];
+    stock_labels = res_data.chart["labels"];
+    stock_data = res_data.chart["data"];
+    change = res_data.change;
     // console.log(data["labels"]);
     chart.data.labels = stock_labels;
     chart.data.datasets.data = stock_data;
@@ -528,7 +532,7 @@ function updateChart() {
 //import chartjs 2.9.4
 import Chart from "../../../node_modules/chart.js/dist/Chart.js";
 
-function FChart({ isUp = true }) {
+function FChart() {
   const year = useRef();
   const month = useRef();
   const day = useRef();
@@ -545,13 +549,13 @@ function FChart({ isUp = true }) {
     }, 200);
   }
   useEffect(() => {
+    // console.log(isUp);
     //background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
     var ctx = document.getElementById("stock_chart").getContext("2d");
     const gradient = ctx.createLinearGradient(0, 0, 600, 10);
     // gradient.addColorStop(0, "#7c83ff");
     // gradient.addColorStop(1, "#7cf4ff");
-    gradient.addColorStop(0, "#38f9d7");
-    gradient.addColorStop(1, "#43e97b");
+
     let gradientFill = ctx.createLinearGradient(0, 0, 0, 100);
     gradientFill.addColorStop(0, "rgba(124, 131, 255,.3)");
     gradientFill.addColorStop(0.2, "rgba(124, 244, 255,.15)");
@@ -653,7 +657,10 @@ function FChart({ isUp = true }) {
 
     symbol = window.location.href.split("/").pop();
     getOneDayChart().then(function () {
-      console.log("drawing chart\n\n\n\n");
+      const start = stock_data[0];
+      const end = stock_data[stock_data.length - 1];
+      gradient.addColorStop(0, start > end > 0 ? "#38f9d7" : "#e74c3c");
+      gradient.addColorStop(1, start < end > 0 ? "#43e97b" : "#e74c3c");
       drawchart(ctx, gradient, gradientFill);
     });
     // function redraw() {
@@ -668,7 +675,12 @@ function FChart({ isUp = true }) {
       if (loading) return;
       loading = true;
       getOneYearChart().then(function () {
-        drawchart(ctx, gradient, gradientFill);
+        const start = stock_data[0];
+        const end = stock_data[stock_data.length - 1];
+        const gradient2 = ctx.createLinearGradient(0, 0, 600, 10);
+        gradient2.addColorStop(0, start > end > 0 ? "#38f9d7" : "#e74c3c");
+        gradient2.addColorStop(1, start < end > 0 ? "#43e97b" : "#e74c3c");
+        drawchart(ctx, gradient2, gradientFill);
         loading = false;
       });
       changeFocus(3);
@@ -677,7 +689,14 @@ function FChart({ isUp = true }) {
       if (loading) return;
       loading = true;
       getOneMonthChart().then(function () {
-        drawchart(ctx, gradient, gradientFill);
+        const start = stock_data[0];
+        const end = stock_data[stock_data.length - 1];
+        const gradient2 = ctx.createLinearGradient(0, 0, 600, 10);
+        gradient2.addColorStop(0, start > end > 0 ? "#38f9d7" : "#e74c3c");
+        gradient2.addColorStop(1, start < end > 0 ? "#43e97b" : "#e74c3c");
+        // gradient2.addColorStop(0, start > end > 0 ? "#38f9d7" : "#000000");
+        // gradient2.addColorStop(1, change > 0 ? "#43e97b" : "#e74c3c");
+        drawchart(ctx, gradient2, gradientFill);
         loading = false;
       });
       changeFocus(2);
@@ -686,7 +705,12 @@ function FChart({ isUp = true }) {
       if (loading) return;
       loading = true;
       getOneDayChart().then(function () {
-        drawchart(ctx, gradient, gradientFill);
+        const start = stock_data[0];
+        const end = stock_data[stock_data.length - 1];
+        const gradient2 = ctx.createLinearGradient(0, 0, 600, 10);
+        gradient2.addColorStop(0, start > end > 0 ? "#38f9d7" : "#e74c3c");
+        gradient2.addColorStop(1, start < end > 0 ? "#43e97b" : "#e74c3c");
+        drawchart(ctx, gradient2, gradientFill);
         loading = false;
       });
       changeFocus(1);
