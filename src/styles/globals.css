@@ -70,9 +70,15 @@ body,
   /* --primary: #222831;
   --secondary: #393e46;
   --tertiary: #da0037; */
+
   --primary: #222831;
   --secondary: #393e46;
   --tertiary: #24b47e;
+  --svgFill: #24b47e;
+  /* --primary: #1b262c;
+  --secondary: #393e46;
+  --tertiary: #24b47e;
+  --svgFill: #24b47e; */
 
   margin: 0;
   width: 100%;
@@ -653,7 +659,7 @@ a {
   min-width: 40px;
   position: absolute;
   top: 30px;
-  fill: rgb(221, 221, 221);
+  fill: var(--svgFill);
 }
 @media only screen and (max-width: 600px) {
   .leftbar {
@@ -865,7 +871,7 @@ a {
 
 .panel__portfolio-title {
   width: 5.5%;
-  fill: #222831;
+  fill: var(--svgFill);
   margin-right: 10px;
   min-width: 20px;
 }
@@ -1096,7 +1102,7 @@ a {
   width: 2%;
   min-width: 30px;
   margin-right: 10px;
-  fill: #222831;
+  fill: var(--svgFill);
 }
 
 .panel__stockList {
@@ -2083,15 +2089,15 @@ input[type="number"] {
 .Chart__timers h6 {
   padding: 5px 10px;
   border-radius: 10px;
-  background-color: #222831;
+  background-color: var((--primary));
   margin: 0 3px;
   transition: all 0.5s;
 }
 .Chart__timers h6:hover {
-  background-color: #30475e;
+  background-color: var(--tertiary);
 }
 .Chart__timers .active {
-  background-color: #30475e;
+  background-color: var(--tertiary);
 }
 
 .stockPage__trade {
@@ -2173,7 +2179,7 @@ input[type="number"] {
   white-space: nowrap;
 }
 .stockPage__trade .stockPage__buy-input {
-  background-color: #30475e;
+  background-color: var(--secondary);
   color: white;
   padding: 10px;
   font-weight: bold;
@@ -2191,14 +2197,14 @@ input[type="number"] {
 
 .stockPage__buy-button {
   padding: 10px;
-  background-color: #30475e;
+  background-color: var(--secondary);
   color: white;
   font-weight: bold;
   transition: all 0.5s;
   border-radius: 5px;
 }
 .stockPage__buy-button:hover {
-  box-shadow: 3px 3px #ddd;
+  box-shadow: 3px 3px var(--tertiary);
 }
 .stockPage__buy-button:nth-child(1) {
   margin-right: 20px;
@@ -2309,7 +2315,7 @@ input[type="number"] {
 .stockPage__keyStats h3 svg {
   width: 30px;
   margin-right: 10px;
-  fill: #222831;
+  fill: var(--svgFill);
 }
 .stockPage__keyStats .news {
   width: 50%;
@@ -2355,7 +2361,7 @@ input[type="number"] {
 .stockPage__keyStats .news__nothing svg {
   width: 30%;
   height: 30%;
-  fill: #222831;
+  fill: var(--svgFill);
 }
 .stockPage__keyStats .news .article {
   width: 100%;
@@ -2657,3 +2663,101 @@ input[type="number"] {
 /* * {
   transition: all 1000ms;
 } */
+
+/* portfolio */
+.light .portfolio {
+  background-color: #edebf8;
+}
+.light .portfolio__list tr {
+  color: #3a1414;
+  background-color: white;
+}
+.light .portfolio__list tr:nth-child(1):hover {
+  background-color: white;
+}
+.light .portfolio__list tr:hover {
+  background-color: #999eaf;
+}
+
+.portfolio {
+  display: flex;
+  width: 100%;
+}
+.portfolio .alertMessage {
+  width: 30%;
+  height: 20%;
+  padding: 20px;
+  min-height: 200px;
+}
+.portfolio__container {
+  width: 95%;
+  padding: 3%;
+  padding-top: 2%;
+  display: flex;
+  flex-direction: column;
+}
+@media only screen and (max-width: 600px) {
+  .portfolio__container {
+    width: 100%;
+  }
+}
+.portfolio__list {
+  width: 100%;
+  font-size: 15px;
+  border-spacing: 0 0px;
+  white-space: nowrap;
+}
+.portfolio__list tr {
+  background-color: #30475e;
+  height: 60px;
+  transition: all 0.2s;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.portfolio__list tr:nth-child(1) th:nth-child(3) {
+  display: none;
+}
+@media only screen and (max-width: 760px) {
+  .portfolio__list tr {
+    font-size: 12px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .portfolio__list tr {
+    font-size: 9px;
+  }
+}
+.portfolio__list tr:first-child th:first-child {
+  border-top-left-radius: 15px;
+}
+.portfolio__list tr:first-child th:last-child {
+  border-top-right-radius: 15px;
+}
+.portfolio__list tr:last-child td:first-child {
+  border-bottom-left-radius: 15px;
+}
+.portfolio__list tr:last-child td:last-child {
+  border-bottom-right-radius: 15px;
+}
+.portfolio__list td {
+  text-align: center;
+  padding: 10px;
+}
+@media only screen and (max-width: 500px) {
+  .portfolio__list td {
+    background-color: #30475e;
+  }
+}
+.portfolio__list td:nth-child(3) {
+  display: none;
+  padding: 5px;
+}
+.portfolio__list tr:first-child:hover {
+  background-color: #30475e;
+}
+.portfolio tr td:nth-child(5) {
+  font-weight: bold;
+}
+.portfolio .errorMsg svg {
+  width: 20%;
+}

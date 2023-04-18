@@ -1,6 +1,13 @@
 import Link from "next/link";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export default function Leftbar() {
+  const supabase = useSupabaseClient();
+  //log out function
+  const logout = () => {
+    supabase.auth.signOut();
+  };
+
   // return (
   //   <aside className="leftbar">
   //     <svg
@@ -180,6 +187,7 @@ export default function Leftbar() {
         xmlns="http://www.w3.org/2000/svg"
         class="leftbar__log"
         viewBox="0 0 24 24"
+        onClick={() => logout()}
         id="logout">
         <g>
           <path fill="none" d="M0 0h24v24H0z"></path>

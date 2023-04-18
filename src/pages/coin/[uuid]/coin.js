@@ -20,18 +20,17 @@ export default function Coin() {
     const data = await res.json();
     return data;
   };
-  useEffect(() => {
-    console.log("hehe");
-    const interval = setInterval(async () => {
-      const coin = await getCoinInfo();
-      if (!coin.error) {
-        console.log(coin);
-        setCoinInfo(coin);
-        clearInterval(interval);
-      }
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [getCoinInfo]);
+  // useEffect(() => {
+  //   const interval = setInterval(async () => {
+  //     const coin = await getCoinInfo();
+  //     if (!coin.error) {
+  //       console.log(coin);
+  //       setCoinInfo(coin);
+  //       clearInterval(interval);
+  //     }
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, [getCoinInfo]);
   // const coinUuid = router.query.uuid;
   // useEffect(() => {
   //   fetch(`/api/getCoinInfo?uuid=${coinUuid}`)
@@ -150,7 +149,7 @@ export default function Coin() {
 
                   <Buy />
                 </div>
-                <KeyInfo CoinInfo={coinInfo} />
+                <KeyInfo />
               </div>
             </div>
           </section>

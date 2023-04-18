@@ -1,23 +1,20 @@
 import { formatCurrency, formatNumber } from "@/helpers";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-export default function KeyInfo({ CoinInfo }) {
+export default function KeyInfo() {
   const router = useRouter();
-  const coinUuid = router.query.uuid;
-  const [coinInfo, setCoinInfo] = useState(CoinInfo);
-  const getCoinInfo = async () => {
+  //const coinUuid = router.query.uuid;
+  const [coinInfo, setCoinInfo] = useState();
+  const getCoinInfo = async (coinUuid) => {
     // return { error: true };
     const data = await fetch(`/api/getCoinInfo?uuid=${coinUuid}`);
     const coin = await data.json();
     return coin;
   };
   useEffect(() => {
-    if (!coinUuid) {
-      console.log("no uuid");
-      return;
-    }
+    const coinUuid = window.location.pathname.split("/")[2];
     const interval = setInterval(async () => {
-      const coin = await getCoinInfo();
+      const coin = await getCoinInfo(coinUuid);
       if (!coin.error) {
         setCoinInfo(coin);
         clearInterval(interval);

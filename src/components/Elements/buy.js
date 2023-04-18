@@ -2,9 +2,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { formatCurrency } from "@/helpers";
 import Image from "next/image";
+import { addBookmark, removeBookmark } from "@/helpers";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
 export default function Buy() {
+  const supabase = useSupabaseClient();
+  const user = useUser();
   const router = useRouter();
+  const [isBookmarked, setIsBookmarked] = useState(false);
   // let coinUuid = router.query.uuid;
 
   const [coinInfo, setCoinInfo] = useState();
@@ -29,26 +34,40 @@ export default function Buy() {
         console.log("retrying", coinUuid, router.query);
       }
     }, 5000);
-    return () => clearInterval(interval);
-  }, []);
 
-  useEffect(() => {
-    //upadate price every 5 seconds
-    const interval = setInterval(async () => {
-      const coinUuid = window.location.pathname.split("/")[2];
-      const coin = await getCoinInfo(coinUuid);
-      if (!coin.error) {
-        console.log("updating price");
-        setCoinInfo(coin);
-        console.log(coin.price);
-      } else {
-        console.log("retrying", coinUuid);
+    const checkBookmark = async () => {
+      const { data, error } = await supabase
+        .from("bookmarks")
+        .select("*")
+        .eq("userID", user.id)
+        .eq("coinUUID", coinUuid);
+      if (data.length > 0) {
+        setIsBookmarked(true);
       }
-    }, 10000);
+    };
+    if (user) {
+      checkBookmark();
+    }
     return () => clearInterval(interval);
   }, []);
 
-  if (!coinInfo)
+  // useEffect(() => {
+  //   //upadate price every 5 seconds
+  //   const interval = setInterval(async () => {
+  //     const coinUuid = window.location.pathname.split("/")[2];
+  //     const coin = await getCoinInfo(coinUuid);
+  //     if (!coin.error) {
+  //       console.log("updating price");
+  //       setCoinInfo(coin);
+  //       console.log(coin.price);
+  //     } else {
+  //       console.log("retrying", coinUuid);
+  //     }
+  //   }, 10000);
+  //   return () => clearInterval(interval);
+  // }, []);
+
+  if (!coinInfo || !user)
     return (
       <div class="stockPage__trade">
         <div class="stockPage__mobile">
@@ -168,6 +187,21 @@ export default function Buy() {
           <Image width={25} height={25} src={coinInfo?.iconUrl} alt="hehe" />
           <h4 style={{ padding: 5 }}>{coinInfo?.name}</h4>
           <svg
+            onClick={() => {
+              if (!isBookmarked) {
+                addBookmark(supabase, {
+                  userID: user?.id,
+                  coinUUID: coinInfo?.uuid,
+                });
+              } else {
+                removeBookmark(supabase, {
+                  userID: user?.id,
+                  coinUUID: coinInfo?.uuid,
+                });
+              }
+
+              setIsBookmarked(!isBookmarked);
+            }}
             id="bookmark"
             xmlns="http://www.w3.org/2000/svg"
             width="25"
@@ -178,7 +212,11 @@ export default function Buy() {
             stroke-linecap="round"
             stroke-linejoin="round"
             stroke="#ddd"
-            style={{ cursor: "pointer", marginLeft: "auto" }}>
+            style={{
+              cursor: "pointer",
+              marginLeft: "auto",
+              fill: isBookmarked ? "rgb(221,221,221)" : "none",
+            }}>
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
           </svg>
         </div>
