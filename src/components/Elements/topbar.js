@@ -1,10 +1,19 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import SearchBar from "../SearchBar/SearchBar";
-import { useUser } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { formatCurrency, getBalance } from "@/helpers";
 
 export default function Topbar() {
   const user = useUser();
+  const supabase = useSupabaseClient();
+  const [balance, setBalance] = useState(0);
+  useEffect(() => {
+    if (!user) return;
+    getBalance(supabase, user.id).then((balance) => {
+      setBalance(balance);
+    });
+  }, [user]);
 
   return (
     <nav style={{ display: "flex", alignItems: "center" }}>
@@ -24,7 +33,7 @@ export default function Topbar() {
         <SearchBar />
         <div className="topbar__container">
           <div className="topbar__user">
-            <h3>{user?.email}</h3>
+            <h3 style={{ paddingRight: 10 }}>{user?.email.split("@")[0]}</h3>
             {/* {admin && (
               <Link to="/admin">
                 <div className="topbar__dev">
@@ -41,7 +50,7 @@ export default function Topbar() {
                     <path d="M18 7h3a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h15v4zM4 9v10h16V9H4zm0-4v2h12V5H4zm11 8h3v2h-3v-2z" />
                   </g>
                 </svg>
-                <h3>100,000</h3>
+                <h3>{formatCurrency(balance)}</h3>
               </div>
             </Link>
             {/* )} */}

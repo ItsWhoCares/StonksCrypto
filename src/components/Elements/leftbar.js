@@ -1,12 +1,37 @@
 import Link from "next/link";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import {
+  useSession,
+  useSupabaseClient,
+  useUser,
+} from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Leftbar() {
   const supabase = useSupabaseClient();
+  const session = useSession();
+  const router = useRouter();
+
   //log out function
   const logout = () => {
     supabase.auth.signOut();
+    router.push("/");
   };
+
+  useEffect(() => {
+    if (!session) {
+      router.push("/");
+    }
+  }, [session]);
+
+  // const router = useRouter();
+
+  // const logout = async () => {
+  //   console.log("logout");
+  //   const { error } = await supabase.auth.signOut();
+  //   if (error) console.log("Error signing out:", error.message);
+  //   else router.push("/");
+  // };
 
   // return (
   //   <aside className="leftbar">
@@ -92,10 +117,11 @@ export default function Leftbar() {
   //     </svg>
   //   </aside>
   // );
+
   return (
-    <aside class="leftbar">
+    <aside className="leftbar">
       <svg
-        class="leftbar__logo"
+        className="leftbar__logo"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24">
         <g>
@@ -103,7 +129,7 @@ export default function Leftbar() {
           <path d="M3.897 17.86l3.91-3.91 2.829 2.828 4.571-4.57L17 14V9h-5l1.793 1.793-3.157 3.157-2.828-2.829-4.946 4.946A9.965 9.965 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.987 9.987 0 0 1-8.103-4.14z"></path>
         </g>
       </svg>
-      <ul class="leftbar__menu">
+      <ul className="leftbar__menu">
         <Link href={"/dashboard"}>
           <li>
             <svg
@@ -113,9 +139,9 @@ export default function Leftbar() {
               viewBox="0 0 24 24"
               fill="none"
               stroke="#dddddd"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               style={{ stroke: "rgb(94, 181, 248)" }}>
               <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"></path>
               <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"></path>
@@ -131,9 +157,9 @@ export default function Leftbar() {
               viewBox="0 0 24 24"
               fill="none"
               stroke="#dddddd"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               style={{ stroke: "rgb(221, 221, 221)" }}>
               <path d="M12 20v-6M6 20V10M18 20V4"></path>
             </svg>
@@ -148,9 +174,9 @@ export default function Leftbar() {
               viewBox="0 0 24 24"
               fill="none"
               stroke="#dddddd"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               style={{ stroke: "rgb(221, 221, 221)" }}>
               <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
               <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
@@ -166,9 +192,9 @@ export default function Leftbar() {
               viewBox="0 0 24 24"
               fill="none"
               stroke="#dddddd"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               style={{ stroke: "rgb(221, 221, 221)" }}>
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
             </svg>
@@ -177,7 +203,7 @@ export default function Leftbar() {
       </ul>
 
       <h5
-        class="panel__status"
+        className="panel__status"
         id="panel__status"
         style={{ color: "rgb(94, 250, 215)" }}>
         Market status: Open
@@ -185,7 +211,7 @@ export default function Leftbar() {
 
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="leftbar__log"
+        className="leftbar__log"
         viewBox="0 0 24 24"
         onClick={() => logout()}
         id="logout">

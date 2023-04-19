@@ -72,3 +72,15 @@ export async function getBookmarks(supabase, userID) {
   );
   return bookmarks;
 }
+
+export async function getBalance(supabase, userID) {
+  const { data, error } = await supabase
+    .from("user_data")
+    .select("*")
+    .eq("user_id", userID);
+  if (error) {
+    console.log(error);
+    return -1;
+  }
+  return data[0]?.balance ?? -1;
+}

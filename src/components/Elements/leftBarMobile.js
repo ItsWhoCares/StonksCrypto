@@ -2,10 +2,10 @@ import Link from "next/link";
 export default function LeftbarMobile() {
   return (
     <nav style={{ display: "flex", alignItems: "center" }}>
-      <div class="mobileMenu" id="mobileMenu">
-        <aside class="leftbar">
+      <div className="mobileMenu" id="mobileMenu">
+        <aside className="leftbar">
           <svg
-            class="leftbar__logo"
+            className="leftbar__logo"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24">
             <g>
@@ -13,7 +13,7 @@ export default function LeftbarMobile() {
               <path d="M3.897 17.86l3.91-3.91 2.829 2.828 4.571-4.57L17 14V9h-5l1.793 1.793-3.157 3.157-2.828-2.829-4.946 4.946A9.965 9.965 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.987 9.987 0 0 1-8.103-4.14z"></path>
             </g>
           </svg>
-          <ul class="leftbar__menu">
+          <ul className="leftbar__menu">
             <Link href={"/dashboard"}>
               <li>
                 <svg
@@ -23,9 +23,9 @@ export default function LeftbarMobile() {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#dddddd"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   style={{ stroke: "rgb(94, 181, 248)" }}>
                   <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"></path>
                   <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"></path>
@@ -41,9 +41,9 @@ export default function LeftbarMobile() {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#dddddd"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   style={{ stroke: "rgb(221, 221, 221)" }}>
                   <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
                   <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
@@ -59,9 +59,9 @@ export default function LeftbarMobile() {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#dddddd"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   style={{ stroke: "rgb(221, 221, 221)" }}>
                   <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                 </svg>
@@ -70,7 +70,7 @@ export default function LeftbarMobile() {
           </ul>
 
           <h5
-            class="panel__status"
+            className="panel__status"
             id="panel__status"
             style={{ color: "rgb(235, 88, 135)" }}>
             Market status: Closed
@@ -79,7 +79,7 @@ export default function LeftbarMobile() {
           <Link href={"/logout"}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="leftbar__log"
+              className="leftbar__log"
               viewBox="0 0 24 24"
               id="logout">
               <g>

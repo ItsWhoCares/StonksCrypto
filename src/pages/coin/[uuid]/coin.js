@@ -11,6 +11,7 @@ import LeftbarMobile from "@/components/Elements/leftBarMobile";
 
 export default function Coin() {
   const router = useRouter();
+
   const coinUuid = router.query.uuid;
   // const session = useSession();
   // const supabase = useSupabaseClient();
@@ -20,6 +21,12 @@ export default function Coin() {
     const data = await res.json();
     return data;
   };
+  // const session = useSession();
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push("/");
+  //   }
+  // }, [session]);
   // useEffect(() => {
   //   const interval = setInterval(async () => {
   //     const coin = await getCoinInfo();

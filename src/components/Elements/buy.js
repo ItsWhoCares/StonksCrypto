@@ -167,7 +167,7 @@ export default function Buy() {
             id="buy_input"
             type="number"
           />
-          <button class="stockPage__buy-button" onClick="buyConfirm('VKTX');">
+          <button class="stockPage__buy-button" onClick={null}>
             BUY
           </button>
         </div>
@@ -248,7 +248,7 @@ export default function Buy() {
           id="buy_input"
           type="number"
         />
-        <button class="stockPage__buy-button" onClick="buyConfirm('VKTX');">
+        <button class="stockPage__buy-button" onClick={null}>
           BUY
         </button>
       </div>

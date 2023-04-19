@@ -3,7 +3,11 @@ import LeftbarMobile from "@/components/Elements/leftBarMobile";
 import Topbar from "@/components/Elements/topbar";
 import { useEffect, useState } from "react";
 import { formatCurrency, getBookmarks, removeBookmark } from "@/helpers";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import {
+  useSupabaseClient,
+  useUser,
+  useSession,
+} from "@supabase/auth-helpers-react";
 import Link from "next/link";
 export default function Watchlist() {
   const user = useUser();
@@ -16,6 +20,12 @@ export default function Watchlist() {
       setBookmarks(data);
     });
   }, [user]);
+  // const session = useSession();
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push("/");
+  //   }
+  // }, [session]);
   return (
     <main id="root">
       <div class="container">

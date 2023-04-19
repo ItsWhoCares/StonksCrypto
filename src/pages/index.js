@@ -13,6 +13,21 @@ const Home = () => {
       router.push("/dashboard");
     }
   }, [session]);
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        if (event === "SIGNED_IN") {
+          console.log("signed in");
+          router.push("/dashboard");
+        } else if (event === "SIGNED_OUT") {
+          router.push("/");
+        }
+      }
+    );
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, []);
 
   return (
     <div className="auth">

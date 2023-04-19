@@ -19,6 +19,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!session) {
+      console.log("no session");
       router.push("/");
     }
   }, [session]);
@@ -46,8 +47,8 @@ export default function Dashboard() {
     return (
       <>
         <main id="root">
-          <div class="container">
-            <section class="Dashboard" id="dashboard">
+          <div className="container">
+            <section className="Dashboard" id="dashboard">
               <div></div>
               <div
                 style={{
@@ -58,13 +59,13 @@ export default function Dashboard() {
                 <div style={{ display: "flex", height: "100%" }}>
                   <Leftbar />
 
-                  <div class="panel">
+                  <div className="panel">
                     <LeftbarMobile />
                     <Topbar />
 
-                    <div class="panel__container">
-                      <div class="panel__top">
-                        <div class="panel__title">
+                    <div className="panel__container">
+                      <div className="panel__top">
+                        <div className="panel__title">
                           <div
                             style={{
                               display: "flex",
@@ -73,7 +74,7 @@ export default function Dashboard() {
                             }}>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              class="panel__portfolio-title"
+                              className="panel__portfolio-title"
                               viewBox="0 0 24 24">
                               <g>
                                 <path fill="none" d="M0 0h24v24H0z"></path>
@@ -84,11 +85,11 @@ export default function Dashboard() {
                           </div>
                         </div>
                         <div
-                          class="panel__topCharts"
+                          className="panel__topCharts"
                           style={{ display: "flex" }}>
-                          <div class="panel__portfolio-section">
-                            <div class="panel__portfolio" id="portfolio">
-                              <div class="errorMsg">
+                          <div className="panel__portfolio-section">
+                            <div className="panel__portfolio" id="portfolio">
+                              <div className="errorMsg">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   viewBox="0 0 24 24">
@@ -118,8 +119,8 @@ export default function Dashboard() {
     return (
       <>
         <main id="root">
-          <div class="container">
-            <section class="Dashboard" id="dashboard">
+          <div className="container">
+            <section className="Dashboard" id="dashboard">
               <div></div>
               <div
                 style={{
@@ -130,13 +131,13 @@ export default function Dashboard() {
                 <div style={{ display: "flex", height: "100%" }}>
                   <Leftbar />
 
-                  <div class="panel">
+                  <div className="panel">
                     <LeftbarMobile />
                     <Topbar />
 
-                    <div class="panel__container">
-                      <div class="panel__top">
-                        <div class="panel__title">
+                    <div className="panel__container">
+                      <div className="panel__top">
+                        <div className="panel__title">
                           <div
                             style={{
                               display: "flex",
@@ -145,7 +146,7 @@ export default function Dashboard() {
                             }}>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              class="panel__portfolio-title"
+                              className="panel__portfolio-title"
                               viewBox="0 0 24 24">
                               <g>
                                 <path fill="none" d="M0 0h24v24H0z"></path>
@@ -156,11 +157,11 @@ export default function Dashboard() {
                           </div>
                         </div>
                         <div
-                          class="panel__topCharts"
+                          className="panel__topCharts"
                           style={{ display: "flex" }}>
-                          <div class="panel__portfolio-section">
-                            <div class="panel__portfolio" id="portfolio">
-                              <div class="errorMsg">
+                          <div className="panel__portfolio-section">
+                            <div className="panel__portfolio" id="portfolio">
+                              <div className="errorMsg">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   viewBox="0 0 24 24">
@@ -176,33 +177,33 @@ export default function Dashboard() {
                         </div>
                       </div>
                     </div>
-                    <div class="panel__low">
-                      <div class="panel__bottom-title">
+                    <div className="panel__low">
+                      <div className="panel__bottom-title">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24">
                           <g>
                             <path fill="none" d="M0 0h24v24H0z"></path>
                             <path
-                              fill-rule="nonzero"
+                              fillRule="nonzero"
                               d="M12 23a7.5 7.5 0 0 0 7.5-7.5c0-.866-.23-1.697-.5-2.47-1.667 1.647-2.933 2.47-3.8 2.47 3.995-7 1.8-10-4.2-14 .5 5-2.796 7.274-4.138 8.537A7.5 7.5 0 0 0 12 23zm.71-17.765c3.241 2.75 3.257 4.887.753 9.274-.761 1.333.202 2.991 1.737 2.991.688 0 1.384-.2 2.119-.595a5.5 5.5 0 1 1-9.087-5.412c.126-.118.765-.685.793-.71.424-.38.773-.717 1.118-1.086 1.23-1.318 2.114-2.78 2.566-4.462z"></path>
                           </g>
                         </svg>
                         <h3>Most Active</h3>
                       </div>
 
-                      <div class="panel__bottom">
-                        <div class="panel__stockList">
-                          <ul class="panel__list">
+                      <div className="panel__bottom">
+                        <div className="panel__stockList">
+                          <ul className="panel__list">
                             {/* first three topcoins only*/}
                             {topCoins.slice(0, 3).map((coin) => (
                               <li key={coin?.uuid}>
                                 <Link href={`/coin/${coin.uuid}`}>
-                                  <span class="panel__fullname">
+                                  <span className="panel__fullname">
                                     <h4>{coin.symbol}</h4>
-                                    <h6 class="panel__name">{coin.name}</h6>
+                                    <h6 className="panel__name">{coin.name}</h6>
                                   </span>
-                                  <div class="panel__list-change">
+                                  <div className="panel__list-change">
                                     {/* round to two decimal places */}
                                     <h4>{formatCurrency(coin.price)}</h4>
 
@@ -233,16 +234,16 @@ export default function Dashboard() {
                             ))}
                           </ul>
                         </div>
-                        <div class="panel__stockList">
-                          <ul class="panel__list">
+                        <div className="panel__stockList">
+                          <ul className="panel__list">
                             {topCoins.slice(3, 6).map((coin) => (
                               <li key={coin?.uuid}>
                                 <Link href={`/coin/${coin.uuid}`}>
-                                  <span class="panel__fullname">
+                                  <span className="panel__fullname">
                                     <h4>{coin.symbol}</h4>
-                                    <h6 class="panel__name">{coin.name}</h6>
+                                    <h6 className="panel__name">{coin.name}</h6>
                                   </span>
-                                  <div class="panel__list-change">
+                                  <div className="panel__list-change">
                                     {/* round to two decimal places */}
                                     <h4>{formatCurrency(coin.price)}</h4>
 
@@ -273,16 +274,16 @@ export default function Dashboard() {
                             ))}
                           </ul>
                         </div>
-                        <div class="panel__stockList">
-                          <ul class="panel__list">
+                        <div className="panel__stockList">
+                          <ul className="panel__list">
                             {topCoins.slice(6, 9).map((coin) => (
                               <li key={coin?.uuid}>
                                 <Link href={`/coin/${coin.uuid}`}>
-                                  <span class="panel__fullname">
+                                  <span className="panel__fullname">
                                     <h4>{coin.symbol}</h4>
-                                    <h6 class="panel__name">{coin.name}</h6>
+                                    <h6 className="panel__name">{coin.name}</h6>
                                   </span>
-                                  <div class="panel__list-change">
+                                  <div className="panel__list-change">
                                     {/* round to two decimal places */}
                                     <h4>{formatCurrency(coin.price)}</h4>
                                     {coin.change > 0 ? (
