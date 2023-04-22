@@ -16,10 +16,29 @@ export default function Watchlist() {
   useEffect(() => {
     if (!user) return;
     getBookmarks(supabase, user?.id).then((data) => {
-      console.log(data);
       setBookmarks(data);
     });
   }, [user]);
+  // useEffect(() => {
+  //   const bookmarks = supabase
+  //     .channel("custom-delete-channel")
+  //     .on(
+  //       "postgres_changes",
+  //       { event: "DELETE", schema: "public", table: "bookmarks" },
+  //       (payload) => {
+  //         console.log("Change received!", payload);
+  //         setBookmarks((prev) => {
+  //           return prev.filter(
+  //             (coin) => coin.coinUUID !== payload.old.coinUUID
+  //           );
+  //         });
+  //       }
+  //     )
+  //     .subscribe();
+  //   return () => {
+  //     bookmarks.unsubscribe();
+  //   };
+  // }, [user]);
   // const session = useSession();
   // useEffect(() => {
   //   if (!session) {
@@ -94,6 +113,7 @@ export default function Watchlist() {
                           )}
 
                           <td>{formatCurrency(coin.price)}</td>
+
                           <td>
                             <svg
                               onClick={async () => {
@@ -101,8 +121,11 @@ export default function Watchlist() {
                                   userID: user.id,
                                   coinUUID: coin.coinUUID,
                                 });
-                                setBookmarks((prev) =>
-                                  prev.filter((c) => c.id !== coin.id)
+                                //reload
+                                getBookmarks(supabase, user?.id).then(
+                                  (data) => {
+                                    setBookmarks(data);
+                                  }
                                 );
                               }}
                               id="bookmark"
@@ -160,6 +183,16 @@ export default function Watchlist() {
           </div>
         </div>
       </div>
+      {/* <script>
+        {`
+                              const bookmark = document.getElementById("bookmark");
+                              bookmark.addEventListener("click", () => {
+                                //remove row
+                                bookmark.parentElement.parentElement.remove();
+                                
+                              });
+                            `}
+      </script> */}
     </main>
   );
 }

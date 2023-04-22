@@ -10,12 +10,28 @@ export default function Topbar() {
   const [balance, setBalance] = useState(0);
   useEffect(() => {
     if (!user) return;
-    const iter = setInterval(() => {
-      getBalance(supabase, user.id).then((balance) => {
-        setBalance(balance);
-      });
-    }, 2000);
-    return () => clearInterval(iter);
+
+    getBalance(supabase, user.id).then((balance) => {
+      setBalance(balance);
+    });
+  }, [user]);
+  useEffect(() => {
+    if (!user) return;
+
+    const userData = supabase
+      .channel("custom-update-channel")
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "user_data" },
+        (payload) => {
+          console.log("Change received!", payload);
+          setBalance(payload.new.balance);
+        }
+      )
+      .subscribe();
+    return () => {
+      userData.unsubscribe();
+    };
   }, [user]);
 
   return (

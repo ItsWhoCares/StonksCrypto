@@ -59,7 +59,7 @@ export default function Portfolio() {
                         <th></th>
                       </tr>
                       {portfolio.map((coin) => (
-                        <tr key={coin.coinUUID}>
+                        <tr key={coin.buyID}>
                           <td>
                             <Link href={`/coin/${coin.coinUUID}`}>
                               {coin.symbol}

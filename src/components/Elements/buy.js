@@ -5,6 +5,14 @@ import Image from "next/image";
 import { addBookmark, removeBookmark } from "@/helpers";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
+// const getCoinPrice = async (coinUuid) => {
+//   const data = await fetch(`/api/getCoinInfo?uuid=${coinUuid}`, {
+//     next: { revalidate: 10 },
+//   });
+//   const coin = await data.json();
+//   return coin;
+// };
+
 export default function Buy({ onClick, inputRef }) {
   const supabase = useSupabaseClient();
   const user = useUser();
@@ -50,22 +58,28 @@ export default function Buy({ onClick, inputRef }) {
     }
     return () => clearInterval(interval);
   }, []);
-
   // useEffect(() => {
-  //   //upadate price every 5 seconds
-  //   const interval = setInterval(async () => {
-  //     const coinUuid = window.location.pathname.split("/")[2];
-  //     const coin = await getCoinInfo(coinUuid);
-  //     if (!coin.error) {
-  //       console.log("updating price");
-  //       setCoinInfo(coin);
-  //       console.log(coin.price);
-  //     } else {
-  //       console.log("retrying", coinUuid);
-  //     }
-  //   }, 10000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  //   const coinUuid = window.location.pathname.split("/")[2];
+  //   getCoinPrice(coinUuid).then((coin) => {
+  //     setCoinInfo(coin);
+  //   });
+  // }, [router.query]);
+
+  useEffect(() => {
+    //upadate price every 10 seconds
+    const interval = setInterval(async () => {
+      const coinUuid = window.location.pathname.split("/")[2];
+      const coin = await getCoinInfo(coinUuid);
+      if (!coin.error) {
+        console.log("updating price");
+        setCoinInfo(coin);
+        console.log(coin.price);
+      } else {
+        console.log("retrying", coinUuid);
+      }
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
   const set = () => {
     setIsVisible(true);
   };

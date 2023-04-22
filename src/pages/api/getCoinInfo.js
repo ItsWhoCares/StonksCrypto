@@ -18,6 +18,7 @@
 // };
 
 export default async function getCoinInfo(req, res) {
+  res.setHeader("Cache-Control", "s-maxage=86400");
   const options = {
     headers: {
       "Content-Type": "application/json",

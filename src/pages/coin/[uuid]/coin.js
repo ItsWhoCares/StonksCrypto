@@ -11,7 +11,7 @@ import LeftbarMobile from "@/components/Elements/leftBarMobile";
 import { formatCurrency } from "@/helpers";
 import { createBuyTransaction } from "@/helpers";
 import ConfirmBox from "./confirmBox";
-
+// export const revalidate = 1;
 export default function Coin() {
   const router = useRouter();
   const inputRef = useRef();
