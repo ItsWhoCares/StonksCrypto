@@ -84,3 +84,99 @@ export async function getBalance(supabase, userID) {
   }
   return data[0]?.balance ?? -1;
 }
+
+export async function getPortfolio(supabase, userID) {
+  const { data, error } = await supabase
+    .from("portfolio")
+    .select("*")
+    .eq("userID", userID);
+  if (error) {
+    console.log(error);
+    return -1;
+  }
+  //get coin info for each bookmark
+  const portfolio = await Promise.all(
+    data.map(async (portfolioItem) => {
+      const res = await fetch(
+        `/api/getCoinInfo?uuid=${portfolioItem.coinUUID}`
+      );
+      const coin = await res.json();
+
+      return {
+        ...portfolioItem,
+        currentPrice: coin.price,
+        symbol: coin.symbol,
+        name: coin.name,
+        change: formatNumber(
+          ((coin.price - portfolioItem.coinPrice) / portfolioItem.coinPrice) *
+            100
+        ),
+      };
+    })
+  );
+  return portfolio;
+}
+
+export async function createBuyTransaction(
+  supabase,
+  { userID, coinUUID, coinPrice, quantity }
+) {
+  const { data, error } = await supabase.from("buy_transaction").insert([
+    {
+      userID,
+      coinUUID,
+      coinPrice,
+      quantity,
+    },
+  ]);
+  if (error) {
+    return { error: true, errorMsg: error.message };
+  }
+  return { data, error: false };
+}
+
+export async function createSellTransaction(supabase, { userID, buyID }) {
+  //first get the buy transaction
+  const { data, error } = await supabase
+    .from("buy_transaction")
+    .select("*")
+    .eq("id", buyID);
+  if (error) {
+    return { error: true, errorMsg: error.message };
+  }
+  const buyTransaction = data[0];
+  //get the current price of the coin
+  const res = await fetch(`/api/getCoinInfo?uuid=${buyTransaction.coinUUID}`);
+  const coin = await res.json();
+  const currentPrice = coin.price;
+  //create sell transaction
+  const { data: data2, error: error2 } = await supabase
+    .from("sell_transaction")
+    .insert([
+      {
+        userID,
+        buyID,
+        coinUUID: buyTransaction.coinUUID,
+        coinPrice: currentPrice,
+        quantity: buyTransaction.quantity,
+      },
+    ]);
+  if (error2) {
+    return { error: true, errorMsg: error2.message };
+  }
+  return { data: data2, error: false };
+}
+
+//   // const { data, error } = await supabase.from("sell_transaction").insert([
+//   //   {
+//   //     userID,
+//   //     coinUUID,
+//   //     coinPrice,
+//   //     quantity,
+//   //   },
+//   // ]);
+//   // if (error) {
+//   //   return { error: true, errorMsg: error.message };
+//   // }
+//   // return { data, error: false };
+// }

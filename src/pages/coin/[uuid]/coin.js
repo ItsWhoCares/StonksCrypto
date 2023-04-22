@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import Topbar from "@/components/Elements/topbar";
 import Buy from "@/components/Elements/buy";
 import KeyInfo from "@/components/KeyInfo/KeyInfo";
@@ -8,143 +8,77 @@ import FChart from "@/components/Chart/FChart";
 import Link from "next/link";
 import Leftbar from "@/components/Elements/leftbar";
 import LeftbarMobile from "@/components/Elements/leftBarMobile";
+import { formatCurrency } from "@/helpers";
+import { createBuyTransaction } from "@/helpers";
+import ConfirmBox from "./confirmBox";
 
 export default function Coin() {
   const router = useRouter();
+  const inputRef = useRef();
 
   const coinUuid = router.query.uuid;
-  // const session = useSession();
-  // const supabase = useSupabaseClient();
+  const user = useUser();
+  const supabase = useSupabaseClient();
   const [coinInfo, setCoinInfo] = useState();
-  const getCoinInfo = async () => {
-    const res = await fetch(`/api/getCoinInfo?uuid=${router.query.uuid}`);
+  const [isVisible, setIsVisible] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const getCoinInfo = async (uuid) => {
+    const res = await fetch(`/api/getCoinInfo?uuid=${uuid}`);
     const data = await res.json();
     return data;
   };
-  // const session = useSession();
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.push("/");
-  //   }
-  // }, [session]);
-  // useEffect(() => {
-  //   const interval = setInterval(async () => {
-  //     const coin = await getCoinInfo();
-  //     if (!coin.error) {
-  //       console.log(coin);
-  //       setCoinInfo(coin);
-  //       clearInterval(interval);
-  //     }
-  //   }, 5000);
-  //   return () => clearInterval(interval);
-  // }, [getCoinInfo]);
-  // const coinUuid = router.query.uuid;
-  // useEffect(() => {
-  //   fetch(`/api/getCoinInfo?uuid=${coinUuid}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setCoinInfo(data);
-  //       console.log(data);
-  //     });
+  useEffect(() => {
+    const uuid = window.location.pathname.split("/")[2];
+    getCoinInfo(uuid).then((data) => {
+      setCoinInfo(data);
+    });
+  }, []);
+  const buyCoin = async () => {
+    const res1 = await fetch(`/api/getCoinPrice?uuid=${coinUuid}`);
+    const data = await res1.json();
+    const coinPrice = data?.price;
+    if (!data.error) {
+      const res = await createBuyTransaction(supabase, {
+        userID: user?.id,
+        coinUUID: coinInfo?.uuid,
+        coinPrice,
+        quantity: inputRef?.current?.value,
+      });
+
+      if (res.error) {
+        setErrorMsg(res.errorMsg);
+        console.log(errorMsg, "herererere");
+      } else {
+        setIsVisible(false);
+      }
+    }
+  };
+  // const set = () => {
+  //   console.log("before", isVisible);
+  //   setIsVisible(!isVisible);
+  //   console.log("afterset", isVisible);
+  // };
+  // const set = useCallback((value) => {
+  //   console.log("before", isVisible);
+  //   setIsVisible(value);
+  //   console.log("afterset", isVisible);
   // }, []);
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.push("/");
-  //   }
-  // }, [session]);
-  // const labels = ["1", "2", "3"];
-  // const chartData1 = [1, 2, 3];
-  // const data1 = (canvas) => {
-  //   const ctx = canvas.getContext("2d");
-  //   const gradient = ctx.createLinearGradient(0, 0, 600, 10);
-  //   gradient.addColorStop(0, "#7c83ff");
-  //   gradient.addColorStop(1, "#7cf4ff");
-  //   let gradientFill = ctx.createLinearGradient(0, 0, 0, 100);
-  //   gradientFill.addColorStop(0, "rgba(124, 131, 255,.3)");
-  //   gradientFill.addColorStop(0.2, "rgba(124, 244, 255,.15)");
-  //   gradientFill.addColorStop(1, "rgba(255, 255, 255, 0)");
-  //   ctx.shadowBlur = 5;
-  //   ctx.shadowOffsetX = 0;
-  //   ctx.shadowOffsetY = 4;
-  //   return {
-  //     labels,
-  //     datasets: [
-  //       {
-  //         lineTension: 0.1,
-  //         label: "",
-  //         pointBorderWidth: 0,
-  //         pointHoverRadius: 0,
-  //         borderColor: gradient,
-  //         backgroundColor: gradientFill,
-  //         pointBackgroundColor: gradient,
-  //         fill: true,
-  //         borderWidth: 2,
-  //         data: chartData1,
-  //       },
-  //     ],
-  //   };
-  // };
-
-  // const changeFocus = (option) => {
-  //   setTimeout(
-  //     function () {
-  //       var elems = document.querySelectorAll(".Chart__option");
-
-  //       [].forEach.call(elems, function (el) {
-  //         el.classList.remove("active");
-  //       });
-  //       switch (option) {
-  //         case 1:
-  //           this.day.current.classList.add("active");
-  //           break;
-
-  //         case 2:
-  //           this.month.current.classList.add("active");
-  //           break;
-
-  //         case 3:
-  //           this.year.current.classList.add("active");
-  //           break;
-
-  //         case 4:
-  //           this.years.current.classList.add("active");
-  //           break;
-
-  //         case 5:
-  //           this.ytd.current.classList.add("active");
-  //           break;
-
-  //         default:
-  //           this.ytd.current.classList.add("active");
-  //           break;
-  //       }
-  //     }.bind(this),
-  //     200
-  //   );
-  // };
-
   return (
     <>
       <main id="root">
         <div class="container">
           <section class="stock">
-            <div
-              class="black-bg"
-              id="blackbg"
-              style={{ display: "none" }}></div>
-            <div
-              class="buyConfirmation"
-              id="confirmbox"
-              style={{ display: "none" }}>
-              {/* <!--<h3>
-              Are you sure you want to buy 10 shares of VKTX for
-              <span style={{"fontWeight":"bold"}}>128.8</span> dollars
-            </h3> --> */}
-              <div>
-                <button class="stockPage__buy-button">CONFIRM</button>
-                <button class="stockPage__buy-button cancel">CANCEL</button>
-              </div>
-            </div>
+            {isVisible && (
+              <ConfirmBox
+                quantity={inputRef?.current?.value}
+                setIsVisible={setIsVisible}
+                buyCoin={buyCoin}
+                coinPrice={coinInfo?.price}
+                error={errorMsg ? true : false}
+                errorMsg={errorMsg}
+                setErrorMsg={setErrorMsg}
+              />
+            )}
 
             <div style={{ display: "flex", height: "100%" }}>
               <Leftbar />
@@ -154,7 +88,7 @@ export default function Coin() {
                 <div class="stockPage__top">
                   <FChart />
 
-                  <Buy />
+                  <Buy onClick={setIsVisible} inputRef={inputRef} />
                 </div>
                 <KeyInfo />
               </div>

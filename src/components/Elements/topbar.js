@@ -10,9 +10,12 @@ export default function Topbar() {
   const [balance, setBalance] = useState(0);
   useEffect(() => {
     if (!user) return;
-    getBalance(supabase, user.id).then((balance) => {
-      setBalance(balance);
-    });
+    const iter = setInterval(() => {
+      getBalance(supabase, user.id).then((balance) => {
+        setBalance(balance);
+      });
+    }, 2000);
+    return () => clearInterval(iter);
   }, [user]);
 
   return (

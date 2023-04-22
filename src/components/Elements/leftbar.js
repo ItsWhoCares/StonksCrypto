@@ -18,11 +18,11 @@ export default function Leftbar() {
     router.push("/");
   };
 
-  useEffect(() => {
-    if (!session) {
-      router.push("/");
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push("/");
+  //   }
+  // }, [session]);
 
   // const router = useRouter();
 

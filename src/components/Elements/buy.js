@@ -5,7 +5,7 @@ import Image from "next/image";
 import { addBookmark, removeBookmark } from "@/helpers";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
-export default function Buy() {
+export default function Buy({ onClick, inputRef }) {
   const supabase = useSupabaseClient();
   const user = useUser();
   const router = useRouter();
@@ -66,6 +66,9 @@ export default function Buy() {
   //   }, 10000);
   //   return () => clearInterval(interval);
   // }, []);
+  const set = () => {
+    setIsVisible(true);
+  };
 
   if (!coinInfo || !user)
     return (
@@ -241,6 +244,7 @@ export default function Buy() {
       <h5>Buy {coinInfo?.symbol}</h5>
       <div class="stockPage__buy-container">
         <input
+          ref={inputRef}
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
@@ -248,7 +252,7 @@ export default function Buy() {
           id="buy_input"
           type="number"
         />
-        <button class="stockPage__buy-button" onClick={null}>
+        <button class="stockPage__buy-button" onClick={() => onClick(true)}>
           BUY
         </button>
       </div>

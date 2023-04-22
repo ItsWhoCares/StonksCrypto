@@ -2226,7 +2226,7 @@ input[type="number"] {
 }
 
 .cancel {
-  background: #30475e;
+  background: var(--secondary);
 }
 .cancel:hover {
   box-shadow: 3px 3px #ddd;

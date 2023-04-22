@@ -34,7 +34,7 @@ export default async function getCoinInfo(req, res) {
   if (coin.status === "fail") {
     res.status(404).json({
       error: true,
-      errorMsg: coin,
+      errorMsg: coin.message,
     });
   } else res.status(200).json(coin?.data?.coin ?? { error: true });
 }
