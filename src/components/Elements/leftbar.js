@@ -7,7 +7,7 @@ import {
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-export default function Leftbar() {
+export default function Leftbar({ page }) {
   const supabase = useSupabaseClient();
   const session = useSession();
   const router = useRouter();
@@ -118,6 +118,8 @@ export default function Leftbar() {
   //   </aside>
   // );
 
+  console.log("leftbar", page);
+
   return (
     <aside className="leftbar">
       <svg
@@ -142,7 +144,12 @@ export default function Leftbar() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              style={{ stroke: "rgb(94, 181, 248)" }}>
+              style={{
+                stroke:
+                  page == "dashboard"
+                    ? "rgb(36, 180, 126)"
+                    : "rgb(221, 221, 221)",
+              }}>
               <path d="M20 9v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9"></path>
               <path d="M9 22V12h6v10M2 10.6L12 2l10 8.6"></path>
             </svg>
@@ -177,7 +184,12 @@ export default function Leftbar() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              style={{ stroke: "rgb(221, 221, 221)" }}>
+              style={{
+                stroke:
+                  page == "portfolio"
+                    ? "rgb(36, 180, 126)"
+                    : "rgb(221, 221, 221)",
+              }}>
               <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
               <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
             </svg>
@@ -195,7 +207,12 @@ export default function Leftbar() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              style={{ stroke: "rgb(221, 221, 221)" }}>
+              style={{
+                stroke:
+                  page == "watchlist"
+                    ? "rgb(36, 180, 126)"
+                    : "rgb(221, 221, 221)",
+              }}>
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
             </svg>
           </li>

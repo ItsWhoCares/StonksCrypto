@@ -1,27 +1,27 @@
 import { formatCurrency, formatNumber } from "@/helpers";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-export default function KeyInfo() {
+export default function KeyInfo({ coin }) {
   const router = useRouter();
   //const coinUuid = router.query.uuid;
-  const [coinInfo, setCoinInfo] = useState();
+  const [coinInfo, setCoinInfo] = useState(coin);
   const getCoinInfo = async (coinUuid) => {
     // return { error: true };
     const data = await fetch(`/api/getCoinInfo?uuid=${coinUuid}`);
     const coin = await data.json();
     return coin;
   };
-  useEffect(() => {
-    const coinUuid = window.location.pathname.split("/")[2];
-    const interval = setInterval(async () => {
-      const coin = await getCoinInfo(coinUuid);
-      if (!coin.error) {
-        setCoinInfo(coin);
-        clearInterval(interval);
-      }
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+  // useEffect(() => {
+  //   const coinUuid = window.location.pathname.split("/")[2];
+  //   const interval = setInterval(async () => {
+  //     const coin = await getCoinInfo(coinUuid);
+  //     if (!coin.error) {
+  //       setCoinInfo(coin);
+  //       clearInterval(interval);
+  //     }
+  //   }, 5000);
+  //   return () => clearInterval(interval);
+  // }, []);
   //   return (
   //     <div className="stockPage__trade">
   //       <div className="stockPage__mobile">
@@ -88,7 +88,12 @@ export default function KeyInfo() {
   //       </div>
   //     </div>
   //   );
-  if (!coinInfo)
+  if (!coinInfo) {
+    getCoinInfo(router.query.uuid).then((coin) => {
+      if (!coin.error) {
+        setCoinInfo(coin);
+      }
+    });
     return (
       <div class="stockPage__keyStats">
         <div class="Key-info">
@@ -229,6 +234,8 @@ export default function KeyInfo() {
         </div>
       </div>
     );
+  }
+
   return (
     <div class="stockPage__keyStats">
       <div class="Key-info">

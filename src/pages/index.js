@@ -36,11 +36,18 @@ const Home = () => {
           <Auth
             providers={["google", "github"]}
             supabaseClient={supabase}
-            appearance={{ theme: ThemeSupa }}
+            appearance={{ theme: ThemeSupa,
+              logo: "https://raw.githubusercontent.com/supabase/supabase/master/web/static/supabase-light.svg" }}
             theme="dark"
           />
         ) : (
-          <p>Account page will go here.</p>
+          <div className="loading-screen">
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+            <div className="dot"></div>
+          </div>
         )}
       </div>
     </div>

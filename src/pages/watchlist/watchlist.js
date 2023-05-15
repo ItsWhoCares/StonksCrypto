@@ -56,7 +56,7 @@ export default function Watchlist() {
               flexDirection: "column",
             }}>
             <div style={{ display: "flex", height: "100%" }}>
-              <Leftbar />
+              <Leftbar page={"watchlist"} />
               <div
                 class="portfolio__container"
                 style={{ padding: "3%", paddingTop: "2%", width: "100%" }}>

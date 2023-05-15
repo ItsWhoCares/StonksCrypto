@@ -39,7 +39,7 @@ export default function Portfolio() {
               flexDirection: "column",
             }}>
             <div style={{ display: "flex", height: "100%" }}>
-              <Leftbar />
+              <Leftbar page={"portfolio"} />
               <div
                 className={"portfolio__container"}
                 style={{ padding: "3%", paddingTop: "2%", width: "100%" }}>

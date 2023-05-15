@@ -11,6 +11,12 @@ import LeftbarMobile from "@/components/Elements/leftBarMobile";
 import { formatCurrency } from "@/helpers";
 import { createBuyTransaction } from "@/helpers";
 import ConfirmBox from "./confirmBox";
+
+export const metadata = {
+  title: "...",
+  description: "...",
+};
+
 // export const revalidate = 1;
 export default function Coin() {
   const router = useRouter();
@@ -81,7 +87,7 @@ export default function Coin() {
             )}
 
             <div style={{ display: "flex", height: "100%" }}>
-              <Leftbar />
+              <Leftbar page={"coin"} />
               <div class="stockPage">
                 <LeftbarMobile />
                 <Topbar />

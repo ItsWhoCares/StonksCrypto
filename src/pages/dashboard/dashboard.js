@@ -12,7 +12,37 @@ import DashLoading from "./dashLoading";
 import Leftbar from "@/components/Elements/leftbar";
 import LeftbarMobile from "@/components/Elements/leftBarMobile";
 
-export default function Dashboard() {
+export const metadata = {
+  title: "...",
+  description: "...",
+};
+
+const getTopCoins = async () => {
+  // return { error: true };
+  const res = await fetch("/api/getTopCoins");
+  const data = await res.json();
+  return data;
+};
+
+export async function getStaticProps() {
+  console.log("getStaticProps");
+  // Get external data from the file system, API, DB, etc.
+  // const data = ...
+
+  // The value of the `props` key will be
+  //  passed to the `Home` component
+
+  const data = await getTopCoins();
+
+  return {
+    props: {
+      topCoins: data,
+    },
+  };
+}
+
+export default function Dashboard(props) {
+  console.log("props", props);
   const session = useSession();
   const supabase = useSupabaseClient();
   const router = useRouter();
@@ -26,12 +56,6 @@ export default function Dashboard() {
 
   const [topCoins, setTopCoins] = useState();
 
-  const getTopCoins = async () => {
-    // return { error: true };
-    const res = await fetch("/api/getTopCoins");
-    const data = await res.json();
-    return data;
-  };
   useEffect(() => {
     const interval = setInterval(async () => {
       const coins = await getTopCoins();

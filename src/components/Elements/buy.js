@@ -13,14 +13,14 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 //   return coin;
 // };
 
-export default function Buy({ onClick, inputRef }) {
+export default function Buy({ onClick, inputRef, coin }) {
   const supabase = useSupabaseClient();
   const user = useUser();
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
   // let coinUuid = router.query.uuid;
 
-  const [coinInfo, setCoinInfo] = useState();
+  const [coinInfo, setCoinInfo] = useState(coin);
   //   console.log(coinUuid);
   const getCoinInfo = async (coinUuid) => {
     // return { error: true };
