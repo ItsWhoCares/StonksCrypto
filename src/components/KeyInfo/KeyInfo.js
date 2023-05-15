@@ -95,8 +95,8 @@ export default function KeyInfo({ coin }) {
       }
     });
     return (
-      <div class="stockPage__keyStats">
-        <div class="Key-info">
+      <div className="stockPage__keyStats">
+        <div className="Key-info">
           <h3>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <g>
@@ -106,9 +106,9 @@ export default function KeyInfo({ coin }) {
             </svg>
             Key Informations
           </h3>
-          <div class="Key-info__columns">
-            <div class="Key-info__info">
-              <h4 class="Key-info__label">Market Cap</h4>
+          <div className="Key-info__columns">
+            <div className="Key-info__info">
+              <h4 className="Key-info__label">Market Cap</h4>
               <h3>
                 <div
                   style={{
@@ -125,8 +125,8 @@ export default function KeyInfo({ coin }) {
                 </div>
               </h3>
             </div>
-            <div class="Key-info__info">
-              <h4 class="Key-info__label">Coin Rank</h4>
+            <div className="Key-info__info">
+              <h4 className="Key-info__label">Coin Rank</h4>
               <h3>
                 <div
                   style={{
@@ -140,8 +140,8 @@ export default function KeyInfo({ coin }) {
                 </div>
               </h3>
             </div>
-            <div class="Key-info__info">
-              <h4 class="Key-info__label">All Time High</h4>
+            <div className="Key-info__info">
+              <h4 className="Key-info__label">All Time High</h4>
               <h3>
                 <div
                   style={{
@@ -155,8 +155,8 @@ export default function KeyInfo({ coin }) {
                 </div>
               </h3>
             </div>
-            <div class="Key-info__info">
-              <h4 class="Key-info__label">24h volume</h4>
+            <div className="Key-info__info">
+              <h4 className="Key-info__label">24h volume</h4>
               <h3>
                 <div
                   style={{
@@ -170,8 +170,8 @@ export default function KeyInfo({ coin }) {
                 </div>
               </h3>
             </div>
-            <div class="Key-info__info">
-              <h4 class="Key-info__label">Circulating supply</h4>
+            <div className="Key-info__info">
+              <h4 className="Key-info__label">Circulating supply</h4>
               <h3>
                 <div
                   style={{
@@ -185,8 +185,8 @@ export default function KeyInfo({ coin }) {
                 </div>
               </h3>
             </div>
-            <div class="Key-info__info">
-              <h4 class="Key-info__label">Max supply</h4>
+            <div className="Key-info__info">
+              <h4 className="Key-info__label">Max supply</h4>
               <h3>
                 <div
                   style={{
@@ -202,7 +202,7 @@ export default function KeyInfo({ coin }) {
             </div>
           </div>
         </div>
-        <div class="news">
+        <div className="news">
           <h3>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <g>
@@ -213,8 +213,8 @@ export default function KeyInfo({ coin }) {
             Latest News
           </h3>
 
-          <div class="news__articles">
-            <div class="news__nothing">
+          <div className="news__articles">
+            <div className="news__nothing">
               <svg
                 enableBackground="new 0 0 512 512"
                 viewBox="0 0 512 512"
@@ -237,8 +237,8 @@ export default function KeyInfo({ coin }) {
   }
 
   return (
-    <div class="stockPage__keyStats">
-      <div class="Key-info">
+    <div className="stockPage__keyStats">
+      <div className="Key-info">
         <h3>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g>
@@ -248,36 +248,36 @@ export default function KeyInfo({ coin }) {
           </svg>
           Key Informations
         </h3>
-        <div class="Key-info__columns">
-          <div class="Key-info__info">
-            <h4 class="Key-info__label">Market Cap</h4>
+        <div className="Key-info__columns">
+          <div className="Key-info__info">
+            <h4 className="Key-info__label">Market Cap</h4>
             <h3>{formatCurrency(coinInfo?.marketCap, "compact")}</h3>
           </div>
-          <div class="Key-info__info">
-            <h4 class="Key-info__label">Coin Rank</h4>
+          <div className="Key-info__info">
+            <h4 className="Key-info__label">Coin Rank</h4>
             <h3>{coinInfo?.rank}</h3>
           </div>
-          <div class="Key-info__info">
-            <h4 class="Key-info__label">All Time High</h4>
+          <div className="Key-info__info">
+            <h4 className="Key-info__label">All Time High</h4>
             <h3>
               {formatCurrency(coinInfo?.allTimeHigh?.price, "standard", "USD")}
             </h3>
           </div>
-          <div class="Key-info__info">
-            <h4 class="Key-info__label">24h volume</h4>
+          <div className="Key-info__info">
+            <h4 className="Key-info__label">24h volume</h4>
             <h3>{formatCurrency(coinInfo["24hVolume"], "compact")}</h3>
           </div>
-          <div class="Key-info__info">
-            <h4 class="Key-info__label">Circulating supply</h4>
+          <div className="Key-info__info">
+            <h4 className="Key-info__label">Circulating supply</h4>
             <h3>{formatNumber(coinInfo?.supply?.circulating, "compact")}</h3>
           </div>
-          <div class="Key-info__info">
-            <h4 class="Key-info__label">Max supply</h4>
+          <div className="Key-info__info">
+            <h4 className="Key-info__label">Max supply</h4>
             <h3>{formatNumber(coinInfo?.supply?.max, "compact")}</h3>
           </div>
         </div>
       </div>
-      <div class="news">
+      <div className="news">
         <h3>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <g>
@@ -288,8 +288,8 @@ export default function KeyInfo({ coin }) {
           Latest News
         </h3>
 
-        <div class="news__articles">
-          <div class="news__nothing">
+        <div className="news__articles">
+          <div className="news__nothing">
             <svg
               enableBackground="new 0 0 512 512"
               viewBox="0 0 512 512"

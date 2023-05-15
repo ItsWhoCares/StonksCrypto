@@ -11,6 +11,7 @@ import LeftbarMobile from "@/components/Elements/leftBarMobile";
 import { formatCurrency } from "@/helpers";
 import { createBuyTransaction } from "@/helpers";
 import ConfirmBox from "./confirmBox";
+import Head from "next/head";
 
 export const metadata = {
   title: "...",
@@ -71,9 +72,12 @@ export default function Coin() {
   // }, []);
   return (
     <>
+    <Head>
+        <title>{coinInfo?.name} | StonksCrypto</title>
+    </Head>
       <main id="root">
-        <div class="container">
-          <section class="stock">
+        <div className="container">
+          <section className="stock">
             {isVisible && (
               <ConfirmBox
                 quantity={inputRef?.current?.value}
@@ -88,10 +92,10 @@ export default function Coin() {
 
             <div style={{ display: "flex", height: "100%" }}>
               <Leftbar page={"coin"} />
-              <div class="stockPage">
+              <div className="stockPage">
                 <LeftbarMobile />
                 <Topbar />
-                <div class="stockPage__top">
+                <div className="stockPage__top">
                   <FChart />
 
                   <Buy onClick={setIsVisible} inputRef={inputRef} />

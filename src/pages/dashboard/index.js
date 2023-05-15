@@ -89,7 +89,9 @@ export default function Dashboard(props) {
     return (
       <>
         <Head>
-          <title>Dashboard</title>
+          <title>Dashboard | StonksCrypto</title>
+          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+          <link rel="icon" type="image/png" href="/favicon.png" />
         </Head>
         <>
           <main id="root">

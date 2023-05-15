@@ -2,7 +2,7 @@
 
 .auth {
   --custom-font-family: Rubik, sans-serif;
-  --custom-bg-color: #101010;
+  --custom-bg-color: #222831;
   --custom-panel-color: #222;
   --custom-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.8);
   --custom-color: #fff;
@@ -24,6 +24,7 @@
   width: 100vw;
   overflow-x: hidden;
 }
+
 /* html {
   zoom: 0.8;
 } */
@@ -93,6 +94,11 @@ body,
   color: white;
   background-color: var(--primary);
   /* background-color: #222831; */
+  transition: all 0.4s;
+}
+
+.c-egTDuJ-iwjZXY-color-default:hover {
+  box-shadow: 3px 3px var(--tertiary);
   transition: all 0.4s;
 }
 
@@ -2764,4 +2770,81 @@ input[type="number"] {
 }
 .portfolio .errorMsg svg {
   width: 20%;
+}
+
+/* Loading */
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  font-size: 2rem;
+}
+
+.loading-screen .dot {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+  margin: 0.8em;
+  border-radius: 50%;
+}
+
+.loading-screen .dot::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: inherit;
+  animation: anime 2s ease-out infinite;
+}
+@keyframes anime {
+  50%,
+  75% {
+    transform: scale(2.5);
+  }
+  80%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.loading-screen .dot:nth-child(1) {
+  /* background-color: #4285f5; */
+  background-color: var(--tertiary);
+}
+.loading-screen .dot:nth-child(2) {
+  /* background-color: #ea4436; */
+  background-color: var(--tertiary);
+}
+
+.loading-screen .dot:nth-child(3) {
+  /* background-color: #fbbd06; */
+  background-color: var(--tertiary);
+}
+
+.loading-screen .dot:nth-child(4) {
+  /* background-color: #34a952; */
+  background-color: var(--tertiary);
+}
+
+.loading-screen .dot:nth-child(5) {
+  /* background-color: #cf9fff; */
+  background-color: var(--tertiary);
+}
+.loading-screen .dot:nth-child(1)::before {
+  animation-delay: 0.2s;
+}
+.loading-screen .dot:nth-child(2)::before {
+  animation-delay: 0.4s;
+}
+.loading-screen .dot:nth-child(3)::before {
+  animation-delay: 0.6s;
+}
+.loading-screen .dot:nth-child(4)::before {
+  animation-delay: 0.8s;
+}
+.loading-screen .dot:nth-child(5)::before {
+  animation-delay: 1s;
 }

@@ -52,7 +52,7 @@ export default function Topbar() {
         <SearchBar />
         <div className="topbar__container">
           <div className="topbar__user">
-            <h3 style={{ paddingRight: 10 }}>{user?.email.split("@")[0]}</h3>
+            {/* <h3 style={{ paddingRight: 10 }}>{user?.email.split("@")[0]}</h3> */}
             {/* {admin && (
               <Link to="/admin">
                 <div className="topbar__dev">

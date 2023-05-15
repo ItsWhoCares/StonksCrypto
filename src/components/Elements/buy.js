@@ -86,8 +86,8 @@ export default function Buy({ onClick, inputRef, coin }) {
 
   if (!coinInfo || !user)
     return (
-      <div class="stockPage__trade">
-        <div class="stockPage__mobile">
+      <div className="stockPage__trade">
+        <div className="stockPage__mobile">
           <div
             style={{
               display: "flex",
@@ -116,15 +116,15 @@ export default function Buy({ onClick, inputRef, coin }) {
               height="25"
               viewBox="0 0 24 24"
               fill="none"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               stroke="#ddd"
               style={{ cursor: "pointer", marginLeft: "auto" }}>
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
             </svg>
           </div>
-          <div class="stockPage__trade-top">
+          <div className="stockPage__trade-top">
             <h2 id="latestprice">
               {process.env.NEXT_PUBLIC_REFERENCE_CURRENCY_SYMBOL}
               <div
@@ -175,16 +175,16 @@ export default function Buy({ onClick, inputRef, coin }) {
             <div className="linear-background"></div>
           </div>
         </h5>
-        <div class="stockPage__buy-container">
+        <div className="stockPage__buy-container">
           <input
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck="false"
-            class="stockPage__buy-input"
+            className="stockPage__buy-input"
             id="buy_input"
             type="number"
           />
-          <button class="stockPage__buy-button" onClick={null}>
+          <button className="stockPage__buy-button" onClick={null}>
             BUY
           </button>
         </div>
@@ -192,8 +192,8 @@ export default function Buy({ onClick, inputRef, coin }) {
     );
 
   return (
-    <div class="stockPage__trade">
-      <div class="stockPage__mobile">
+    <div className="stockPage__trade">
+      <div className="stockPage__mobile">
         <div
           style={{
             display: "flex",
@@ -225,9 +225,9 @@ export default function Buy({ onClick, inputRef, coin }) {
             height="25"
             viewBox="0 0 24 24"
             fill="none"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             stroke="#ddd"
             style={{
               cursor: "pointer",
@@ -237,7 +237,7 @@ export default function Buy({ onClick, inputRef, coin }) {
             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
           </svg>
         </div>
-        <div class="stockPage__trade-top">
+        <div className="stockPage__trade-top">
           <h2 id="latestprice">{formatCurrency(coinInfo?.price)}</h2>
 
           <h6
@@ -256,17 +256,17 @@ export default function Buy({ onClick, inputRef, coin }) {
                     <span style={{"color":"rgb(244, 83, 133)"}}>$24.18 (-0.26)</span>
                   </h6> --> */}
       <h5>Buy {coinInfo?.symbol}</h5>
-      <div class="stockPage__buy-container">
+      <div className="stockPage__buy-container">
         <input
           ref={inputRef}
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
-          class="stockPage__buy-input"
+          className="stockPage__buy-input"
           id="buy_input"
           type="number"
         />
-        <button class="stockPage__buy-button" onClick={() => onClick(true)}>
+        <button className="stockPage__buy-button" onClick={() => onClick(true)}>
           BUY
         </button>
       </div>

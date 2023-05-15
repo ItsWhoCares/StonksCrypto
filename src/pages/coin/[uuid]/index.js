@@ -101,11 +101,13 @@ export default function Coin(props) {
     <>
       <Head>
         <title>{coinInfo?.name} | Stonks</title>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
       </Head>
       <>
         <main id="root">
-          <div class="container">
-            <section class="stock">
+          <div className="container">
+            <section className="stock">
               {isVisible && (
                 <ConfirmBox
                   quantity={inputRef?.current?.value}
@@ -120,10 +122,10 @@ export default function Coin(props) {
 
               <div style={{ display: "flex", height: "100%" }}>
                 <Leftbar />
-                <div class="stockPage">
+                <div className="stockPage">
                   <LeftbarMobile />
                   <Topbar />
-                  <div class="stockPage__top">
+                  <div className="stockPage__top">
                     <FChart />
 
                     <Buy

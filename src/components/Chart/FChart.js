@@ -723,13 +723,13 @@ function FChart() {
   return (
     <div className="Chart">
       <Script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></Script>
-      <div class="chartjs-size-monitor-expand">
-        <div class=""></div>
+      <div className="chartjs-size-monitor-expand">
+        <div className=""></div>
       </div>
-      <div class="chartjs-size-monitor-shrink">
-        <div class=""></div>
+      <div className="chartjs-size-monitor-shrink">
+        <div className=""></div>
       </div>
-      <canvas id="stock_chart" class="chartjs-render-monitor"></canvas>
+      <canvas id="stock_chart" className="chartjs-render-monitor"></canvas>
       <div className="Chart__timers">
         <h6 className="Chart__option" ref={year} id="3">
           1Y
