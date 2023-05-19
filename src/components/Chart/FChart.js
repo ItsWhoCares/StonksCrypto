@@ -443,10 +443,14 @@ async function getOneDayChart() {
   return new Promise(async function (resolve) {
     var response = await fetch(`/api/getOneDayData?uuid=${symbol}`);
     var res_data = await response.json();
-    stock_labels = res_data.chart["labels"];
-    stock_data = res_data.chart["data"];
-    change = res_data.change;
-    resolve();
+    try {
+      stock_labels = res_data.chart["labels"];
+      stock_data = res_data.chart["data"];
+      change = res_data.change;
+      resolve();
+    } catch (err) {
+      resolve();
+    }
   });
 }
 

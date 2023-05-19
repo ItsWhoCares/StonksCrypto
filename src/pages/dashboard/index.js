@@ -10,11 +10,12 @@ import Link from "next/link";
 import "@/styles/Dashboard.module.css";
 import Topbar from "@/components/Elements/topbar";
 import { formatCurrency } from "@/helpers";
-import DashLoading from "./dashLoading";
+import DashLoading from "../../components/Elements/dashLoading";
 import Leftbar from "@/components/Elements/leftbar";
 import LeftbarMobile from "@/components/Elements/leftBarMobile";
 import Head from "next/head";
-import { Html } from "next/document";
+
+import { motion } from "framer-motion";
 
 export const metadata = {
   title: "...",
@@ -22,7 +23,6 @@ export const metadata = {
 };
 
 import { server } from "../../../config";
-import Loading from "./loading";
 
 const getTopCoins = async () => {
   // return { error: true };
@@ -83,9 +83,9 @@ export default function Dashboard(props) {
   //     return () => clearInterval(interval);
   //   }, []);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   if (!topCoins) {
-    return <Loading />;
-  } else
     return (
       <>
         <Head>
@@ -155,8 +155,112 @@ export default function Dashboard(props) {
                           </div>
                         </div>
                       </div>
+                      <DashLoading />
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </main>
+        </>
+      </>
+    );
+  } else
+    return (
+      <>
+        <Head>
+          <title>Dashboard | StonksCrypto</title>
+          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+          <link rel="icon" type="image/png" href="/favicon.png" />
+        </Head>
+        <>
+          <main id="root">
+            <div className="container">
+              <section className="Dashboard" id="dashboard">
+                <div></div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                  }}>
+                  <div style={{ display: "flex", height: "100%" }}>
+                    <Leftbar page={"dashboard"} />
+
+                    <div className="panel">
+                      <LeftbarMobile />
+                      <Topbar />
+
+                      <div className="panel__container">
+                        <div className="panel__top">
+                          <motion.div
+                            onClick={() => {
+                              router.push("/portfolio");
+                            }}
+                            style={{ cursor: "pointer" }}
+                            className="panel__title"
+                            whileHover={{ scale: 1.2 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 400,
+                              damping: 17,
+                            }}>
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                width: "33%",
+                              }}>
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="panel__portfolio-title"
+                                viewBox="0 0 24 24">
+                                <g>
+                                  <path fill="none" d="M0 0h24v24H0z"></path>
+                                  <path d="M4.873 3h14.254a1 1 0 0 1 .809.412l3.823 5.256a.5.5 0 0 1-.037.633L12.367 21.602a.5.5 0 0 1-.706.028c-.007-.006-3.8-4.115-11.383-12.329a.5.5 0 0 1-.037-.633l3.823-5.256A1 1 0 0 1 4.873 3zm.51 2l-2.8 3.85L12 19.05 21.417 8.85 18.617 5H5.383z"></path>
+                                </g>
+                              </svg>
+                              <h3>Portfolio</h3>
+                            </div>
+                          </motion.div>
+                          <div
+                            className="panel__topCharts"
+                            style={{ display: "flex" }}>
+                            <div className="panel__portfolio-section">
+                              <div className="panel__portfolio" id="portfolio">
+                                <div className="errorMsg">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24">
+                                    <g>
+                                      <path
+                                        fill="none"
+                                        d="M0 0h24v24H0z"></path>
+                                      <path d="M5.373 4.51A9.962 9.962 0 0 1 12 2c5.523 0 10 4.477 10 10a9.954 9.954 0 0 1-1.793 5.715L17.5 12H20A8 8 0 0 0 6.274 6.413l-.9-1.902zm13.254 14.98A9.962 9.962 0 0 1 12 22C6.477 22 2 17.523 2 12c0-2.125.663-4.095 1.793-5.715L6.5 12H4a8 8 0 0 0 13.726 5.587l.9 1.902zm-5.213-4.662L10.586 12l-2.829 2.828-1.414-1.414 4.243-4.242L13.414 12l2.829-2.828 1.414 1.414-4.243 4.242z"></path>
+                                    </g>
+                                  </svg>
+                                  <p>You didn't buy any stocks yet.</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div className="panel__low">
-                        <div className="panel__bottom-title">
+                        <motion.div
+                          drag
+                          dragSnapToOrigin={true}
+                          whileDrag={{ scale: 1.2 }}
+                          style={{ cursor: "pointer" }}
+                          className="panel__bottom-title"
+                          whileHover={{ scale: 1.2 }}
+                          whileTap={{ scale: 0.95 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 17,
+                          }}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24">
@@ -168,132 +272,165 @@ export default function Dashboard(props) {
                             </g>
                           </svg>
                           <h3>Most Active</h3>
-                        </div>
+                        </motion.div>
 
                         <div className="panel__bottom">
                           <div className="panel__stockList">
                             <ul className="panel__list">
                               {/* first three topcoins only*/}
                               {topCoins.slice(0, 3).map((coin) => (
-                                <li key={coin?.uuid}>
-                                  <Link href={`/coin/${coin.uuid}`}>
-                                    <span className="panel__fullname">
-                                      <h4>{coin.symbol}</h4>
-                                      <h6 className="panel__name">
-                                        {coin.name}
-                                      </h6>
-                                    </span>
-                                    <div className="panel__list-change">
-                                      {/* round to two decimal places */}
-                                      <h4>{formatCurrency(coin.price)}</h4>
+                                <motion.div
+                                  animate={{ x: 0, opacity: 1 }}
+                                  style={{ width: "100%", x: 200, opacity: 0 }}
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.95 }}
+                                  transition={{
+                                    type: "spring",
+                                    stiffness: 400,
+                                    damping: 17,
+                                  }}>
+                                  <li key={coin?.uuid}>
+                                    <Link href={`/coin/${coin.uuid}`}>
+                                      <span className="panel__fullname">
+                                        <h4>{coin.symbol}</h4>
+                                        <h6 className="panel__name">
+                                          {coin.name}
+                                        </h6>
+                                      </span>
+                                      <div className="panel__list-change">
+                                        {/* round to two decimal places */}
+                                        <h4>{formatCurrency(coin.price)}</h4>
 
-                                      {coin.change > 0 ? (
-                                        <h5
-                                          style={{
-                                            color: "rgb(102, 249, 218)",
-                                            margin: "5px 0px 0px",
-                                            textShadow:
-                                              "rgba(102, 249, 218, 0.5) 0px 0px 7px",
-                                          }}>
-                                          +{coin.change}%
-                                        </h5>
-                                      ) : (
-                                        <h5
-                                          style={{
-                                            color: "rgb(244, 84, 133)",
-                                            margin: "5px 0px 0px",
-                                            textShadow:
-                                              "rgba(244, 84, 133, 0.5) 0px 0px 7px",
-                                          }}>
-                                          {coin.change}%
-                                        </h5>
-                                      )}
-                                    </div>
-                                  </Link>
-                                </li>
+                                        {coin.change > 0 ? (
+                                          <h5
+                                            style={{
+                                              color: "rgb(102, 249, 218)",
+                                              margin: "5px 0px 0px",
+                                              textShadow:
+                                                "rgba(102, 249, 218, 0.5) 0px 0px 7px",
+                                            }}>
+                                            +{coin.change}%
+                                          </h5>
+                                        ) : (
+                                          <h5
+                                            style={{
+                                              color: "rgb(244, 84, 133)",
+                                              margin: "5px 0px 0px",
+                                              textShadow:
+                                                "rgba(244, 84, 133, 0.5) 0px 0px 7px",
+                                            }}>
+                                            {coin.change}%
+                                          </h5>
+                                        )}
+                                      </div>
+                                    </Link>
+                                  </li>
+                                </motion.div>
                               ))}
                             </ul>
                           </div>
                           <div className="panel__stockList">
                             <ul className="panel__list">
                               {topCoins.slice(3, 6).map((coin) => (
-                                <li key={coin?.uuid}>
-                                  <Link href={`/coin/${coin.uuid}`}>
-                                    <span className="panel__fullname">
-                                      <h4>{coin.symbol}</h4>
-                                      <h6 className="panel__name">
-                                        {coin.name}
-                                      </h6>
-                                    </span>
-                                    <div className="panel__list-change">
-                                      {/* round to two decimal places */}
-                                      <h4>{formatCurrency(coin.price)}</h4>
+                                <motion.div
+                                  animate={{ x: 0, opacity: 1 }}
+                                  style={{ width: "100%", x: 200, opacity: 0 }}
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.95 }}
+                                  transition={{
+                                    type: "spring",
+                                    stiffness: 400,
+                                    damping: 17,
+                                  }}>
+                                  <li key={coin?.uuid}>
+                                    <Link href={`/coin/${coin.uuid}`}>
+                                      <span className="panel__fullname">
+                                        <h4>{coin.symbol}</h4>
+                                        <h6 className="panel__name">
+                                          {coin.name}
+                                        </h6>
+                                      </span>
+                                      <div className="panel__list-change">
+                                        {/* round to two decimal places */}
+                                        <h4>{formatCurrency(coin.price)}</h4>
 
-                                      {coin.change > 0 ? (
-                                        <h5
-                                          style={{
-                                            color: "rgb(102, 249, 218)",
-                                            margin: "5px 0px 0px",
-                                            textShadow:
-                                              "rgba(102, 249, 218, 0.5) 0px 0px 7px",
-                                          }}>
-                                          +{coin.change}%
-                                        </h5>
-                                      ) : (
-                                        <h5
-                                          style={{
-                                            color: "rgb(244, 84, 133)",
-                                            margin: "5px 0px 0px",
-                                            textShadow:
-                                              "rgba(244, 84, 133, 0.5) 0px 0px 7px",
-                                          }}>
-                                          {coin.change}%
-                                        </h5>
-                                      )}
-                                    </div>
-                                  </Link>
-                                </li>
+                                        {coin.change > 0 ? (
+                                          <h5
+                                            style={{
+                                              color: "rgb(102, 249, 218)",
+                                              margin: "5px 0px 0px",
+                                              textShadow:
+                                                "rgba(102, 249, 218, 0.5) 0px 0px 7px",
+                                            }}>
+                                            +{coin.change}%
+                                          </h5>
+                                        ) : (
+                                          <h5
+                                            style={{
+                                              color: "rgb(244, 84, 133)",
+                                              margin: "5px 0px 0px",
+                                              textShadow:
+                                                "rgba(244, 84, 133, 0.5) 0px 0px 7px",
+                                            }}>
+                                            {coin.change}%
+                                          </h5>
+                                        )}
+                                      </div>
+                                    </Link>
+                                  </li>
+                                </motion.div>
                               ))}
                             </ul>
                           </div>
                           <div className="panel__stockList">
                             <ul className="panel__list">
                               {topCoins.slice(6, 9).map((coin) => (
-                                <li key={coin?.uuid}>
-                                  <Link href={`/coin/${coin.uuid}`}>
-                                    <span className="panel__fullname">
-                                      <h4>{coin.symbol}</h4>
-                                      <h6 className="panel__name">
-                                        {coin.name}
-                                      </h6>
-                                    </span>
-                                    <div className="panel__list-change">
-                                      {/* round to two decimal places */}
-                                      <h4>{formatCurrency(coin.price)}</h4>
-                                      {coin.change > 0 ? (
-                                        <h5
-                                          style={{
-                                            color: "rgb(102, 249, 218)",
-                                            margin: "5px 0px 0px",
-                                            textShadow:
-                                              "rgba(102, 249, 218, 0.5) 0px 0px 7px",
-                                          }}>
-                                          +{coin.change}%
-                                        </h5>
-                                      ) : (
-                                        <h5
-                                          style={{
-                                            color: "rgb(244, 84, 133)",
-                                            margin: "5px 0px 0px",
-                                            textShadow:
-                                              "rgba(244, 84, 133, 0.5) 0px 0px 7px",
-                                          }}>
-                                          {coin.change}%
-                                        </h5>
-                                      )}
-                                    </div>
-                                  </Link>
-                                </li>
+                                <motion.div
+                                  animate={{ x: 0, opacity: 1 }}
+                                  style={{ width: "100%", x: 200, opacity: 0 }}
+                                  whileHover={{ scale: 1.1 }}
+                                  whileTap={{ scale: 0.95 }}
+                                  transition={{
+                                    type: "spring",
+                                    stiffness: 400,
+                                    damping: 17,
+                                  }}>
+                                  <li key={coin?.uuid}>
+                                    <Link href={`/coin/${coin.uuid}`}>
+                                      <span className="panel__fullname">
+                                        <h4>{coin.symbol}</h4>
+                                        <h6 className="panel__name">
+                                          {coin.name}
+                                        </h6>
+                                      </span>
+                                      <div className="panel__list-change">
+                                        {/* round to two decimal places */}
+                                        <h4>{formatCurrency(coin.price)}</h4>
+                                        {coin.change > 0 ? (
+                                          <h5
+                                            style={{
+                                              color: "rgb(102, 249, 218)",
+                                              margin: "5px 0px 0px",
+                                              textShadow:
+                                                "rgba(102, 249, 218, 0.5) 0px 0px 7px",
+                                            }}>
+                                            +{coin.change}%
+                                          </h5>
+                                        ) : (
+                                          <h5
+                                            style={{
+                                              color: "rgb(244, 84, 133)",
+                                              margin: "5px 0px 0px",
+                                              textShadow:
+                                                "rgba(244, 84, 133, 0.5) 0px 0px 7px",
+                                            }}>
+                                            {coin.change}%
+                                          </h5>
+                                        )}
+                                      </div>
+                                    </Link>
+                                  </li>
+                                </motion.div>
                               ))}
                             </ul>
                           </div>

@@ -72,9 +72,9 @@ export default function Coin() {
   // }, []);
   return (
     <>
-    <Head>
+      <Head>
         <title>{coinInfo?.name} | StonksCrypto</title>
-    </Head>
+      </Head>
       <main id="root">
         <div className="container">
           <section className="stock">

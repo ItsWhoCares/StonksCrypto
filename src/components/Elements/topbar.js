@@ -4,6 +4,8 @@ import SearchBar from "../SearchBar/SearchBar";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { formatCurrency, getBalance } from "@/helpers";
 
+import { motion } from "framer-motion";
+
 export default function Topbar() {
   const user = useUser();
   const supabase = useSupabaseClient();
@@ -50,7 +52,16 @@ export default function Topbar() {
           </div>
         </div>
         <SearchBar />
-        <div className="topbar__container">
+        <motion.div
+          
+          className="topbar__container"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 17,
+          }}>
           <div className="topbar__user">
             {/* <h3 style={{ paddingRight: 10 }}>{user?.email.split("@")[0]}</h3> */}
             {/* {admin && (
@@ -74,7 +85,7 @@ export default function Topbar() {
             </Link>
             {/* )} */}
           </div>
-        </div>
+        </motion.div>
       </div>
     </nav>
   );

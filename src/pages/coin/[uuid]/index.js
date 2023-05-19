@@ -7,12 +7,13 @@ import Topbar from "@/components/Elements/topbar";
 import Buy from "@/components/Elements/buy";
 import KeyInfo from "@/components/KeyInfo/KeyInfo";
 import FChart from "@/components/Chart/FChart";
+import NotFound from "@/components/Elements/notFound";
 import Link from "next/link";
 import Leftbar from "@/components/Elements/leftbar";
 import LeftbarMobile from "@/components/Elements/leftBarMobile";
 import { formatCurrency } from "@/helpers";
 import { createBuyTransaction } from "@/helpers";
-import ConfirmBox from "./confirmBox";
+import ConfirmBox from "../../../components/Elements/confirmBox";
 import Head from "next/head";
 import { server } from "../../../../config";
 import data from "../../../../coinlist";
@@ -37,10 +38,21 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const res = await fetch(`${server}/api/getCoinInfo?uuid=${params.uuid}`);
   const coin = await res.json();
-  //   console.log(coin);
+  console.log(coin);
+  if (coin.error) {
+    return {
+      props: {
+        coin: null,
+        error: coin.error,
+        errorMsg: coin.errorMsg,
+      },
+      revalidate: 10,
+    };
+  }
   return {
     props: {
       coin,
+      error: false,
     },
     revalidate: 10,
   };
@@ -97,50 +109,56 @@ export default function Coin(props) {
   //   setIsVisible(value);
   //   console.log("afterset", isVisible);
   // }, []);
-  return (
-    <>
-      <Head>
-        <title>{coinInfo?.name} | Stonks</title>
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" type="image/png" href="/favicon.png" />
-      </Head>
+  // return <NotFound errorMsg={props.errorMsg} />;
+
+  if (props.error) {
+    console.log(props);
+    return <NotFound errorMsg={props.errorMsg} />;
+  } else
+    return (
       <>
-        <main id="root">
-          <div className="container">
-            <section className="stock">
-              {isVisible && (
-                <ConfirmBox
-                  quantity={inputRef?.current?.value}
-                  setIsVisible={setIsVisible}
-                  buyCoin={buyCoin}
-                  coinPrice={coinInfo?.price}
-                  error={errorMsg ? true : false}
-                  errorMsg={errorMsg}
-                  setErrorMsg={setErrorMsg}
-                />
-              )}
+        <Head>
+          <title>{coinInfo?.name} | Stonks</title>
+          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+          <link rel="icon" type="image/png" href="/favicon.png" />
+        </Head>
+        <>
+          <main id="root">
+            <div className="container">
+              <section className="stock">
+                {isVisible && (
+                  <ConfirmBox
+                    quantity={inputRef?.current?.value}
+                    setIsVisible={setIsVisible}
+                    buyCoin={buyCoin}
+                    coinPrice={coinInfo?.price}
+                    error={errorMsg ? true : false}
+                    errorMsg={errorMsg}
+                    setErrorMsg={setErrorMsg}
+                  />
+                )}
 
-              <div style={{ display: "flex", height: "100%" }}>
-                <Leftbar />
-                <div className="stockPage">
-                  <LeftbarMobile />
-                  <Topbar />
-                  <div className="stockPage__top">
-                    <FChart />
+                <div style={{ display: "flex", height: "100%" }}>
+                  <Leftbar />
+                  <div className="stockPage">
+                    <LeftbarMobile />
+                    <Topbar />
+                    <div className="stockPage__top">
+                      <FChart />
 
-                    <Buy
-                      onClick={setIsVisible}
-                      inputRef={inputRef}
-                      coin={props.coin}
-                    />
+                      <Buy
+                        onClick={setIsVisible}
+                        inputRef={inputRef}
+                        coin={props.coin}
+                      />
+                    </div>
+                    <KeyInfo coin={props.coin} />
                   </div>
-                  <KeyInfo coin={props.coin} />
                 </div>
-              </div>
-            </section>
-          </div>
-        </main>
+              </section>
+            </div>
+          </main>
+        </>
       </>
-    </>
-  );
+    );
 }

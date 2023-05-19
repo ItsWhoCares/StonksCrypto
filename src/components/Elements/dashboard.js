@@ -41,7 +41,7 @@ export async function getStaticProps() {
   };
 }
 
-export default function Dashboard(props) {
+function Dashboard(props) {
   console.log("props", props);
   const session = useSession();
   const supabase = useSupabaseClient();
