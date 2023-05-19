@@ -3,6 +3,7 @@ import Link from "next/link";
 import SearchBar from "../SearchBar/SearchBar";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { formatCurrency, getBalance } from "@/helpers";
+import Image from "next/image";
 
 import { motion } from "framer-motion";
 
@@ -53,7 +54,8 @@ export default function Topbar() {
         </div>
         <SearchBar />
         <motion.div
-          
+          style={{ y: -100, marginLeft: "auto" }}
+          animate={{ y: 0 }}
           className="topbar__container"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -85,6 +87,22 @@ export default function Topbar() {
             </Link>
             {/* )} */}
           </div>
+        </motion.div>
+        <motion.div
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 17,
+          }}>
+          <Image
+            src={"/feedback.png"}
+            width={64}
+            height={78}
+            quality={100}
+            alt="hehe"
+          />
         </motion.div>
       </div>
     </nav>

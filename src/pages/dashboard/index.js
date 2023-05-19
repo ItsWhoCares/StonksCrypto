@@ -23,6 +23,7 @@ export const metadata = {
 };
 
 import { server } from "../../../config";
+import MostActive from "@/components/Elements/mostActive";
 
 const getTopCoins = async () => {
   // return { error: true };
@@ -36,7 +37,7 @@ const getTopCoins = async () => {
 // }
 
 export async function getStaticProps() {
-  console.log("getStaticProps");
+  // console.log("getStaticProps");
   // Get external data from the file system, API, DB, etc.
   // const data = ...
 
@@ -52,10 +53,17 @@ export async function getStaticProps() {
   };
 }
 
+const selectedVariants = {
+  1: "Market Cap",
+  2: "Volume",
+};
+
 export default function Dashboard(props) {
   const session = useSession();
   const supabase = useSupabaseClient();
   const router = useRouter();
+  const [selectedSort, setSelectedSort] = useState(1);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     if (!session) {
@@ -66,12 +74,30 @@ export default function Dashboard(props) {
 
   const [topCoins, setTopCoins] = useState(props.topCoins);
 
-  //   const getTopCoins = async () => {
-  //     // return { error: true };
-  //     const res = await fetch("/api/getTopCoins");
-  //     const data = await res.json();
-  //     return data;
-  //   };
+  const getTopCoins = async () => {
+    // return { error: true };
+    const res = await fetch("/api/getTopCoins");
+    const data = await res.json();
+    setTopCoins(data);
+  };
+  const getTopByVolume = async () => {
+    // return { error: true };
+
+    const res = await fetch("/api/getTopByVolume");
+    const data = await res.json();
+    // console.log(data);
+    // return data;
+    setTopCoins(data);
+  };
+
+  useEffect(() => {
+    if (selectedSort == 1) {
+      getTopCoins();
+    } else if (selectedSort == 2) {
+      getTopByVolume();
+    }
+  }, [selectedSort]);
+
   //   useEffect(() => {
   //     const interval = setInterval(async () => {
   //       const coins = await getTopCoins();
@@ -249,6 +275,18 @@ export default function Dashboard(props) {
                       </div>
                       <div className="panel__low">
                         <motion.div
+                          onHoverStart={() => {
+                            setIsHovering(true);
+                          }}
+                          onHoverEnd={() => {
+                            setIsHovering(false);
+                          }}
+                          onClick={() => {
+                            setSelectedSort((prev) => {
+                              prev < 2 ? prev++ : (prev = 1);
+                              return prev;
+                            });
+                          }}
                           drag
                           dragSnapToOrigin={true}
                           whileDrag={{ scale: 1.2 }}
@@ -271,170 +309,14 @@ export default function Dashboard(props) {
                                 d="M12 23a7.5 7.5 0 0 0 7.5-7.5c0-.866-.23-1.697-.5-2.47-1.667 1.647-2.933 2.47-3.8 2.47 3.995-7 1.8-10-4.2-14 .5 5-2.796 7.274-4.138 8.537A7.5 7.5 0 0 0 12 23zm.71-17.765c3.241 2.75 3.257 4.887.753 9.274-.761 1.333.202 2.991 1.737 2.991.688 0 1.384-.2 2.119-.595a5.5 5.5 0 1 1-9.087-5.412c.126-.118.765-.685.793-.71.424-.38.773-.717 1.118-1.086 1.23-1.318 2.114-2.78 2.566-4.462z"></path>
                             </g>
                           </svg>
-                          <h3>Most Active</h3>
+
+                          <h3>
+                            {isHovering
+                              ? selectedVariants[selectedSort]
+                              : "Most Active"}
+                          </h3>
                         </motion.div>
-
-                        <div className="panel__bottom">
-                          <div className="panel__stockList">
-                            <ul className="panel__list">
-                              {/* first three topcoins only*/}
-                              {topCoins.slice(0, 3).map((coin) => (
-                                <motion.div
-                                  animate={{ x: 0, opacity: 1 }}
-                                  style={{ width: "100%", x: 200, opacity: 0 }}
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.95 }}
-                                  transition={{
-                                    type: "spring",
-                                    stiffness: 400,
-                                    damping: 17,
-                                  }}>
-                                  <li key={coin?.uuid}>
-                                    <Link href={`/coin/${coin.uuid}`}>
-                                      <span className="panel__fullname">
-                                        <h4>{coin.symbol}</h4>
-                                        <h6 className="panel__name">
-                                          {coin.name}
-                                        </h6>
-                                      </span>
-                                      <div className="panel__list-change">
-                                        {/* round to two decimal places */}
-                                        <h4>{formatCurrency(coin.price)}</h4>
-
-                                        {coin.change > 0 ? (
-                                          <h5
-                                            style={{
-                                              color: "rgb(102, 249, 218)",
-                                              margin: "5px 0px 0px",
-                                              textShadow:
-                                                "rgba(102, 249, 218, 0.5) 0px 0px 7px",
-                                            }}>
-                                            +{coin.change}%
-                                          </h5>
-                                        ) : (
-                                          <h5
-                                            style={{
-                                              color: "rgb(244, 84, 133)",
-                                              margin: "5px 0px 0px",
-                                              textShadow:
-                                                "rgba(244, 84, 133, 0.5) 0px 0px 7px",
-                                            }}>
-                                            {coin.change}%
-                                          </h5>
-                                        )}
-                                      </div>
-                                    </Link>
-                                  </li>
-                                </motion.div>
-                              ))}
-                            </ul>
-                          </div>
-                          <div className="panel__stockList">
-                            <ul className="panel__list">
-                              {topCoins.slice(3, 6).map((coin) => (
-                                <motion.div
-                                  animate={{ x: 0, opacity: 1 }}
-                                  style={{ width: "100%", x: 200, opacity: 0 }}
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.95 }}
-                                  transition={{
-                                    type: "spring",
-                                    stiffness: 400,
-                                    damping: 17,
-                                  }}>
-                                  <li key={coin?.uuid}>
-                                    <Link href={`/coin/${coin.uuid}`}>
-                                      <span className="panel__fullname">
-                                        <h4>{coin.symbol}</h4>
-                                        <h6 className="panel__name">
-                                          {coin.name}
-                                        </h6>
-                                      </span>
-                                      <div className="panel__list-change">
-                                        {/* round to two decimal places */}
-                                        <h4>{formatCurrency(coin.price)}</h4>
-
-                                        {coin.change > 0 ? (
-                                          <h5
-                                            style={{
-                                              color: "rgb(102, 249, 218)",
-                                              margin: "5px 0px 0px",
-                                              textShadow:
-                                                "rgba(102, 249, 218, 0.5) 0px 0px 7px",
-                                            }}>
-                                            +{coin.change}%
-                                          </h5>
-                                        ) : (
-                                          <h5
-                                            style={{
-                                              color: "rgb(244, 84, 133)",
-                                              margin: "5px 0px 0px",
-                                              textShadow:
-                                                "rgba(244, 84, 133, 0.5) 0px 0px 7px",
-                                            }}>
-                                            {coin.change}%
-                                          </h5>
-                                        )}
-                                      </div>
-                                    </Link>
-                                  </li>
-                                </motion.div>
-                              ))}
-                            </ul>
-                          </div>
-                          <div className="panel__stockList">
-                            <ul className="panel__list">
-                              {topCoins.slice(6, 9).map((coin) => (
-                                <motion.div
-                                  animate={{ x: 0, opacity: 1 }}
-                                  style={{ width: "100%", x: 200, opacity: 0 }}
-                                  whileHover={{ scale: 1.1 }}
-                                  whileTap={{ scale: 0.95 }}
-                                  transition={{
-                                    type: "spring",
-                                    stiffness: 400,
-                                    damping: 17,
-                                  }}>
-                                  <li key={coin?.uuid}>
-                                    <Link href={`/coin/${coin.uuid}`}>
-                                      <span className="panel__fullname">
-                                        <h4>{coin.symbol}</h4>
-                                        <h6 className="panel__name">
-                                          {coin.name}
-                                        </h6>
-                                      </span>
-                                      <div className="panel__list-change">
-                                        {/* round to two decimal places */}
-                                        <h4>{formatCurrency(coin.price)}</h4>
-                                        {coin.change > 0 ? (
-                                          <h5
-                                            style={{
-                                              color: "rgb(102, 249, 218)",
-                                              margin: "5px 0px 0px",
-                                              textShadow:
-                                                "rgba(102, 249, 218, 0.5) 0px 0px 7px",
-                                            }}>
-                                            +{coin.change}%
-                                          </h5>
-                                        ) : (
-                                          <h5
-                                            style={{
-                                              color: "rgb(244, 84, 133)",
-                                              margin: "5px 0px 0px",
-                                              textShadow:
-                                                "rgba(244, 84, 133, 0.5) 0px 0px 7px",
-                                            }}>
-                                            {coin.change}%
-                                          </h5>
-                                        )}
-                                      </div>
-                                    </Link>
-                                  </li>
-                                </motion.div>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
+                        <MostActive topCoins={topCoins} />
                       </div>
                     </div>
                   </div>

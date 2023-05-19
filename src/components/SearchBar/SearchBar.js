@@ -1,11 +1,11 @@
 import React from "react";
-import Link from "next/link";
 import { useRef } from "react";
 
 export default function SearchBar() {
   const results = useRef();
   const searchBar = useRef();
   const searchBarEl = useRef();
+  const [coinList, setCoinList] = React.useState([]);
   const searchCoins = async (e) => {
     let result = results.current;
     result.innerHTML = "";

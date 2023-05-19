@@ -1401,7 +1401,7 @@ a {
   height: 7vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between;  here*/
   margin-bottom: 35px;
 }
 .topbar__name {

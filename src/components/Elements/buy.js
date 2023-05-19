@@ -13,6 +13,8 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 //   return coin;
 // };
 
+import { motion } from "framer-motion";
+
 export default function Buy({ onClick, inputRef, coin }) {
   const supabase = useSupabaseClient();
   const user = useUser();
@@ -109,7 +111,8 @@ export default function Buy({ onClick, inputRef, coin }) {
               }}>
               <div className="linear-background"></div>
             </div>
-            <svg
+            <motion.svg
+              animate={{ x: 0 }}
               id="bookmark"
               xmlns="http://www.w3.org/2000/svg"
               width="25"
@@ -120,9 +123,9 @@ export default function Buy({ onClick, inputRef, coin }) {
               strokeLinecap="round"
               strokeLinejoin="round"
               stroke="#ddd"
-              style={{ cursor: "pointer", marginLeft: "auto" }}>
+              style={{ cursor: "pointer", marginLeft: "auto", x: 100 }}>
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-            </svg>
+            </motion.svg>
           </div>
           <div className="stockPage__trade-top">
             <h2 id="latestprice">
@@ -192,7 +195,10 @@ export default function Buy({ onClick, inputRef, coin }) {
     );
 
   return (
-    <div className="stockPage__trade">
+    <motion.div
+      className="stockPage__trade"
+      style={{ x: 100 }}
+      animate={{ x: 0 }}>
       <div className="stockPage__mobile">
         <div
           style={{
@@ -270,6 +276,6 @@ export default function Buy({ onClick, inputRef, coin }) {
           BUY
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

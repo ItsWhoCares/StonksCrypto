@@ -120,19 +120,43 @@ export default function Leftbar({ page }) {
   //   </aside>
   // );
 
-  console.log("leftbar", page);
+  //move logo with mouse
+  useEffect(() => {
+    let box = document.getElementById(".box");
+    let boxBoundingRect = box.getBoundingClientRect();
+    let boxCenter = {
+      x: boxBoundingRect.left + boxBoundingRect.width / 2,
+      y: boxBoundingRect.top + boxBoundingRect.height / 2,
+    };
+
+    document.addEventListener("mousemove", (e) => {
+      let angle =
+        Math.atan2(e.pageX - boxCenter.x, -(e.pageY - boxCenter.y)) *
+        (180 / Math.PI);
+      box.style.transform = `rotate(${angle - 48}deg)`;
+    });
+  }, []);
 
   return (
     <aside className="leftbar">
-      <svg
+      <motion.svg
+        id=".box"
+        onClick={() => router.push("/dashboard")}
         className="leftbar__logo"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24">
+        viewBox="0 0 24 24"
+        whileHover={{ scale: 1.15 }}
+        whileTap={{ scale: 0.9, rotate: -90 }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 17,
+        }}>
         <g>
           <path fill="none" d="M0 0h24v24H0z"></path>
           <path d="M3.897 17.86l3.91-3.91 2.829 2.828 4.571-4.57L17 14V9h-5l1.793 1.793-3.157 3.157-2.828-2.829-4.946 4.946A9.965 9.965 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10a9.987 9.987 0 0 1-8.103-4.14z"></path>
         </g>
-      </svg>
+      </motion.svg>
 
       <motion.ul
         className="leftbar__menu"
@@ -267,6 +291,9 @@ export default function Leftbar({ page }) {
           type: "spring",
           stiffness: 400,
           damping: 17,
+          ease: "linear",
+          delay: 0.2,
+          duration: 0.2,
         }}
         xmlns="http://www.w3.org/2000/svg"
         className="leftbar__log"

@@ -1,6 +1,7 @@
 import { formatCurrency, formatNumber } from "@/helpers";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 export default function KeyInfo({ coin }) {
   const router = useRouter();
   //const coinUuid = router.query.uuid;
@@ -237,7 +238,10 @@ export default function KeyInfo({ coin }) {
   }
 
   return (
-    <div className="stockPage__keyStats">
+    <motion.div
+      className="stockPage__keyStats"
+      style={{ y: 200 }}
+      animate={{ y: 0 }}>
       <div className="Key-info">
         <h3>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -307,6 +311,6 @@ export default function KeyInfo({ coin }) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

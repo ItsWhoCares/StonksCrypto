@@ -7,7 +7,7 @@ import Topbar from "@/components/Elements/topbar";
 import Buy from "@/components/Elements/buy";
 import KeyInfo from "@/components/KeyInfo/KeyInfo";
 import FChart from "@/components/Chart/FChart";
-import NotFound from "@/components/Elements/notFound";
+import NotFound from "@/components/Elements/NotFound";
 import Link from "next/link";
 import Leftbar from "@/components/Elements/leftbar";
 import LeftbarMobile from "@/components/Elements/leftBarMobile";
@@ -38,7 +38,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const res = await fetch(`${server}/api/getCoinInfo?uuid=${params.uuid}`);
   const coin = await res.json();
-  console.log(coin);
+  // console.log(coin);
   if (coin.error) {
     return {
       props: {

@@ -113,7 +113,7 @@ const Home = () => {
     return () => {
       authListener.subscription.unsubscribe();
     };
-  }, []);
+  }, [router, supabase.auth]);
 
   return (
     <>
