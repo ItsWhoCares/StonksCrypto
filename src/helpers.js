@@ -189,6 +189,5 @@ export async function getUserNetWorth(supabase, userID) {
   portfolio.forEach((item) => {
     netWorth += item.currentPrice * item.quantity;
   });
-  console.log(netWorth);
   return netWorth;
 }

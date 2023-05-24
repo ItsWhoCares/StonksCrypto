@@ -287,7 +287,7 @@ export default function Dashboard(props) {
                                           <th>CURRENT VALUE</th>
                                         </tr>
                                         {portfolio.map((coin) => (
-                                          <tr key={coin}>
+                                          <tr key={Math.random()}>
                                             <td>{coin.symbol}</td>
                                             <td>{coin.quantity}</td>
                                             <td
