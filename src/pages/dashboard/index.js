@@ -2,14 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import {
+  useSession,
+  useSupabaseClient,
+  useUser,
+} from "@supabase/auth-helpers-react";
 // import Leftbar from "../../components/Elements/leftbar";
 // import Topbar from "../../components/Elements/topbar";
 // import Loader from "@/components/Elements/loader";
 import Link from "next/link";
 import "@/styles/Dashboard.module.css";
 import Topbar from "@/components/Elements/topbar";
-import { formatCurrency } from "@/helpers";
+import { formatCurrency, getPortfolio, getUserNetWorth } from "@/helpers";
 import DashLoading from "../../components/Elements/dashLoading";
 import Leftbar from "@/components/Elements/leftbar";
 import LeftbarMobile from "@/components/Elements/leftBarMobile";
@@ -64,6 +68,20 @@ export default function Dashboard(props) {
   const router = useRouter();
   const [selectedSort, setSelectedSort] = useState(1);
   const [isHovering, setIsHovering] = useState(false);
+
+  const user = useUser();
+  const [netWorth, setNetWorth] = useState(0);
+  const [portfolio, setPortfolio] = useState([]);
+  useEffect(() => {
+    if (user) {
+      getPortfolio(supabase, user.id).then((data) => {
+        setPortfolio(data);
+        getUserNetWorth(supabase, user.id).then((NetWorth) => {
+          setNetWorth(NetWorth);
+        });
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     if (!session) {
@@ -250,27 +268,92 @@ export default function Dashboard(props) {
                               <h3>Portfolio</h3>
                             </div>
                           </motion.div>
-                          <div
-                            className="panel__topCharts"
-                            style={{ display: "flex" }}>
-                            <div className="panel__portfolio-section">
-                              <div className="panel__portfolio" id="portfolio">
-                                <div className="errorMsg">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24">
-                                    <g>
-                                      <path
-                                        fill="none"
-                                        d="M0 0h24v24H0z"></path>
-                                      <path d="M5.373 4.51A9.962 9.962 0 0 1 12 2c5.523 0 10 4.477 10 10a9.954 9.954 0 0 1-1.793 5.715L17.5 12H20A8 8 0 0 0 6.274 6.413l-.9-1.902zm13.254 14.98A9.962 9.962 0 0 1 12 22C6.477 22 2 17.523 2 12c0-2.125.663-4.095 1.793-5.715L6.5 12H4a8 8 0 0 0 13.726 5.587l.9 1.902zm-5.213-4.662L10.586 12l-2.829 2.828-1.414-1.414 4.243-4.242L13.414 12l2.829-2.828 1.414 1.414-4.243 4.242z"></path>
-                                    </g>
-                                  </svg>
-                                  <p>You didn't buy any stocks yet.</p>
+                          {portfolio.length > 0 ? (
+                            <div
+                              className="panel__topCharts"
+                              style={{ display: "flex" }}>
+                              <div className="panel__portfolio-section">
+                                <div
+                                  className="panel__portfolio"
+                                  id="portfolio"
+                                  style={{ display: "block" }}>
+                                  <div>
+                                    <table className="panel__portfolio-list">
+                                      <tbody>
+                                        <tr>
+                                          <th>SYMBOL</th>
+                                          <th>QUANTITY</th>
+                                          <th>GAIN/LOSS (%)</th>
+                                          <th>CURRENT VALUE</th>
+                                        </tr>
+                                        {portfolio.map((coin) => (
+                                          <tr key={coin}>
+                                            <td>{coin.symbol}</td>
+                                            <td>{coin.quantity}</td>
+                                            <td
+                                              style={
+                                                coin.change > 0
+                                                  ? {
+                                                      color:
+                                                        "rgb(102, 249, 218)",
+                                                    }
+                                                  : {
+                                                      color:
+                                                        "rgb(244, 83, 133)",
+                                                    }
+                                              }>
+                                              {coin.change}%
+                                            </td>
+                                            <td>
+                                              {formatCurrency(
+                                                coin.currentPrice
+                                              )}
+                                            </td>
+                                          </tr>
+                                        ))}
+                                        {/* <tr>
+                                          <td>AMZN</td>
+                                          <td>10</td>
+                                          <td style="color: rgb(102, 249, 218);">
+                                            +0.00%
+                                          </td>
+                                          <td>$1,160.05</td>
+                                        </tr> */}
+                                      </tbody>
+                                    </table>
+                                    <div className="panel__value">
+                                      <h5>NET WORTH</h5>
+                                      <h5>{formatCurrency(netWorth)}</h5>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          ) : (
+                            <div
+                              className="panel__topCharts"
+                              style={{ display: "flex" }}>
+                              <div className="panel__portfolio-section">
+                                <div
+                                  className="panel__portfolio"
+                                  id="portfolio">
+                                  <div className="errorMsg">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 24 24">
+                                      <g>
+                                        <path
+                                          fill="none"
+                                          d="M0 0h24v24H0z"></path>
+                                        <path d="M5.373 4.51A9.962 9.962 0 0 1 12 2c5.523 0 10 4.477 10 10a9.954 9.954 0 0 1-1.793 5.715L17.5 12H20A8 8 0 0 0 6.274 6.413l-.9-1.902zm13.254 14.98A9.962 9.962 0 0 1 12 22C6.477 22 2 17.523 2 12c0-2.125.663-4.095 1.793-5.715L6.5 12H4a8 8 0 0 0 13.726 5.587l.9 1.902zm-5.213-4.662L10.586 12l-2.829 2.828-1.414-1.414 4.243-4.242L13.414 12l2.829-2.828 1.414 1.414-4.243 4.242z"></path>
+                                      </g>
+                                    </svg>
+                                    <p>You didn't buy any stocks yet.</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                       <div className="panel__low">

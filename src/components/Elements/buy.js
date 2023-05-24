@@ -272,9 +272,24 @@ export default function Buy({ onClick, inputRef, coin }) {
           id="buy_input"
           type="number"
         />
-        <button className="stockPage__buy-button" onClick={() => onClick(true)}>
-          BUY
-        </button>
+        <motion.div
+          style={{ display: "inline-block" }}
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 0.9 }}
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 17,
+            ease: "linear",
+            delay: 0.2,
+            duration: 0.2,
+          }}>
+          <button
+            className="stockPage__buy-button"
+            onClick={() => onClick(true)}>
+            BUY
+          </button>
+        </motion.div>
       </div>
     </motion.div>
   );

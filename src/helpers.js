@@ -94,6 +94,7 @@ export async function getPortfolio(supabase, userID) {
     console.log(error);
     return -1;
   }
+
   //get coin info for each bookmark
   const portfolio = await Promise.all(
     data.map(async (portfolioItem) => {
@@ -180,3 +181,14 @@ export async function createSellTransaction(supabase, { userID, buyID }) {
 //   // }
 //   // return { data, error: false };
 // }
+
+export async function getUserNetWorth(supabase, userID) {
+  const portfolio = await getPortfolio(supabase, userID);
+  const balance = await getBalance(supabase, userID);
+  let netWorth = balance;
+  portfolio.forEach((item) => {
+    netWorth += item.currentPrice * item.quantity;
+  });
+  console.log(netWorth);
+  return netWorth;
+}

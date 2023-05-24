@@ -97,6 +97,7 @@ export default function Topbar() {
             damping: 17,
           }}>
           <Image
+            priority={false}
             src={"/feedback.png"}
             width={64}
             height={78}
