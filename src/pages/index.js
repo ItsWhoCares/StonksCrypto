@@ -115,6 +115,31 @@ const Home = () => {
     };
   }, [router, supabase.auth]);
 
+  // const setPalette = async () => {
+  //   const res = await fetch("http://colormind.io/api/", {
+  //     body: '{"model":"default"}',
+  //     headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded",
+  //     },
+  //     method: "POST",
+  //   });
+  //   const data = await res.json();
+  //   const colors = data.result;
+  //   const r = document.querySelector(":root");
+  //   console.log(getComputedStyle(r).getPropertyValue("--primary"), "primary");
+  //   r.style.setProperty("--primary", `rgb(${colors[0]})`);
+  //   r.style.setProperty("--secondary", `rgb(${colors[1]})`);
+  //   r.style.setProperty("--tertiary", `rgb(${colors[2]})`);
+  //   console.log(getComputedStyle(r).getPropertyValue("--primary"), "primary");
+  // };
+
+  // useEffect(() => {
+  //   setPalette();
+  //   // const r = document.querySelector(":root");
+  //   // const rs = getComputedStyle(r);
+  //   // r.style.setProperty("--primary", "lightblue");
+  // }, []);
+
   return (
     <>
       <Head>

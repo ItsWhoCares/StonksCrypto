@@ -902,7 +902,8 @@ a {
 }
 
 .panel__portfolio-section {
-  width: 30%;
+  width: 100%;
+  /* width: 30%; */
   height: 100%;
   min-width: 250px;
 }

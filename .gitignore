@@ -37,3 +37,6 @@ yarn-error.log*
 src/pages/api/test.js
 
 ./misc.js
+
+unlighthouse.config.ts
+out.sql

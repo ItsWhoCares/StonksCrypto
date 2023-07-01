@@ -82,10 +82,8 @@ function updateChart() {
   chart?.update();
 }
 
-import Chart from "../../../node_modules/chart.js/dist/Chart.js";
+//import Chart from "../../../node_modules/chart.js/dist/Chart.js";
 import Script from "next/script.js";
-
-
 
 function FChart() {
   const year = useRef();

@@ -1,4 +1,5 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import dayjs from "dayjs";
 
 export function formatCurrency(amount, notation = "standard", currency = null) {
   let price = new Intl.NumberFormat("en-IN", {
@@ -18,6 +19,10 @@ export function formatNumber(amount, notation = "standard") {
     currency: process.env.NEXT_PUBLIC_REFERENCE_CURRENCY,
   }).format(amount);
   return price;
+}
+
+export function formatDateTime(timestamp) {
+  return dayjs(timestamp).format("ddd HH:mm");
 }
 
 export async function addBookmark(supabase, { userID, coinUUID }) {
@@ -190,4 +195,39 @@ export async function getUserNetWorth(supabase, userID) {
     netWorth += item.currentPrice * item.quantity;
   });
   return netWorth;
+}
+
+export async function getUserAllBuyTransactions(supabase, userID) {
+  const { data, error } = await supabase
+    .from("buy_transaction")
+    .select("*")
+    .eq("userID", userID);
+  if (error) {
+    console.log(error);
+    return -1;
+  }
+  return data;
+}
+
+export async function getUserAllSellTransactions(supabase, userID) {
+  const { data, error } = await supabase
+    .from("sell_transaction")
+    .select("*")
+    .eq("userID", userID);
+  if (error) {
+    console.log(error);
+    return -1;
+  }
+  return data;
+}
+
+export async function getUserAllTransactions(supabase, userID) {
+  const buyTransactions = await getUserAllBuyTransactions(supabase, userID);
+  const sellTransactions = await getUserAllSellTransactions(supabase, userID);
+  const allTransactions = [...buyTransactions, ...sellTransactions];
+  //oreder transactions by created_at
+  allTransactions.sort((a, b) => {
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
+  return allTransactions.reverse();
 }
