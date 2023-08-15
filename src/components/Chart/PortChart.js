@@ -40,7 +40,7 @@ function PortChart() {
   async function getData() {
     try {
       const transactions = await getUserAllTransactions(supabase, user.id);
-      console.log(transactions);
+      // console.log(transactions);
       let balance = 10000;
       stock_labels = transactions.map((transaction) =>
         transaction.buyID

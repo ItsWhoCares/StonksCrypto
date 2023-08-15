@@ -1,5 +1,5 @@
 import React from "react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 export default function SearchBar() {
   const results = useRef();
@@ -63,6 +63,15 @@ export default function SearchBar() {
     }
   };
 
+  const [query, setQuery] = React.useState("");
+  useEffect(() => {
+    //debounce
+    const timeoutId = setTimeout(() => {
+      searchCoins(query);
+    }, 800);
+    return () => clearTimeout(timeoutId);
+  }, [query]);
+
   return (
     <div className="topbar__searchbar" ref={searchBar} id="topbar__searchbar">
       <div
@@ -90,7 +99,9 @@ export default function SearchBar() {
           type="text"
           id="searchBar"
           ref={searchBarEl}
-          onKeyUp={searchCoins}
+          onChange={(e) => {
+            setQuery(e.target.value);
+          }}
           placeholder="Search by symbol"
           onFocus={() => {
             if (results.current.firstChild) {

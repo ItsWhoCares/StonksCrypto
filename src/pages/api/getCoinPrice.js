@@ -1,9 +1,9 @@
+import { getRandomCoinKey } from "@/helpers";
 export default async function getCoinPrice(req, res) {
   const options = {
     headers: {
       "Content-Type": "application/json",
-      "x-access-token":
-        "coinranking232a42e2c18b2c07dab305fca93b69646b67ee6823ee280d",
+      "x-access-token": getRandomCoinKey(),
     },
   };
   const data = await fetch(
