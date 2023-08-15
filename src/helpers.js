@@ -231,3 +231,10 @@ export async function getUserAllTransactions(supabase, userID) {
   });
   return allTransactions.reverse();
 }
+
+export function getRandomCoinKey() {
+  let key1 = process.env.COIN_API_KEY1;
+  let key2 = process.env.COIN_API_KEY2;
+  let key3 = process.env.COIN_API_KEY3;
+  return [key1, key2, key3][Math.floor(Math.random() * 3)];
+}

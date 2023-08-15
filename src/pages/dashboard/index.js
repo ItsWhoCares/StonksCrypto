@@ -402,12 +402,12 @@ export default function Dashboard(props) {
                       </div>
                       <div className="panel__low">
                         <motion.div
-                          onHoverStart={() => {
-                            setIsHovering(true);
-                          }}
-                          onHoverEnd={() => {
-                            setIsHovering(false);
-                          }}
+                          // onHoverStart={() => {
+                          //   setIsHovering(true);
+                          // }}
+                          // onHoverEnd={() => {
+                          //   setIsHovering(false);
+                          // }}
                           onClick={() => {
                             setSelectedSort((prev) => {
                               prev < 2 ? prev++ : (prev = 1);
@@ -417,7 +417,7 @@ export default function Dashboard(props) {
                           drag
                           dragSnapToOrigin={true}
                           whileDrag={{ scale: 1.2 }}
-                          style={{ cursor: "pointer" }}
+                          style={{ cursor: "pointer", width: "26%" }}
                           className="panel__bottom-title"
                           whileHover={{ scale: 1.2 }}
                           whileTap={{ scale: 0.95 }}
@@ -438,9 +438,7 @@ export default function Dashboard(props) {
                           </svg>
 
                           <h3>
-                            {isHovering
-                              ? selectedVariants[selectedSort]
-                              : "Most Active"}
+                            {"Most Active by " + selectedVariants[selectedSort]}
                           </h3>
                         </motion.div>
                         <MostActive topCoins={topCoins} />

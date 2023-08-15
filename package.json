@@ -24,6 +24,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^8.0.2"
+    "@faker-js/faker": "^8.0.2",
+    "@types/react": "^18.2.20"
   }
 }

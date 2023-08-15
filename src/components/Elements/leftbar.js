@@ -192,7 +192,7 @@ export default function Leftbar({ page }) {
             </motion.svg>
           </li>
         </Link>
-        <Link href={"/trends/topGainers"}>
+        {/* <Link href={"/trends/topGainers"}>
           <li>
             <motion.svg
               whileHover={{ scale: 1.2 }}
@@ -215,7 +215,7 @@ export default function Leftbar({ page }) {
               <path d="M12 20v-6M6 20V10M18 20V4"></path>
             </motion.svg>
           </li>
-        </Link>
+        </Link> */}
         <Link href={"/portfolio"}>
           <li>
             <motion.svg

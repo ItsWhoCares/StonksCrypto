@@ -4,6 +4,8 @@ import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import Image from "next/image";
+import logo from "../../public/logo.svg";
 
 export const CustomThemeSupa = {
   default: {
@@ -149,8 +151,29 @@ const Home = () => {
       </Head>
       <div className="auth">
         {!session ? (
-          <div className="authcontainer" style={{ padding: "100px 0 100px 0" }}>
+          <div className="authcontainer" style={{ padding: "50px 0 100px 0" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}>
+              <div className={"logoContainer"}>
+                <Image fill className={"image"} src={"/logo.svg"} />
+              </div>
+              <div
+                style={{
+                  alignSelf: "center",
+                  
+                  float: "right",
+                  fontSize: "2.5rem",
+                  fontWeight: "bold",
+                }}>
+                Stonks<br></br>Crypto
+              </div>
+            </div>
+
             <Auth
+            
               providers={["google", "github"]}
               supabaseClient={supabase}
               appearance={{

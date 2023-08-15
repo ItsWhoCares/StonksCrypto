@@ -16,14 +16,16 @@
 //     "X-RapidAPI-Host": "coinranking1.p.rapidapi.com",
 //   },
 // };
+import { getRandomCoinKey } from "@/helpers";
 
 export default async function getCoinInfo(req, res) {
+  let key = getRandomCoinKey();
+  // console.log(key);
   res.setHeader("Cache-Control", "s-maxage=86400");
   const options = {
     headers: {
       "Content-Type": "application/json",
-      "x-access-token":
-        "coinranking232a42e2c18b2c07dab305fca93b69646b67ee6823ee280d",
+      "x-access-token": key,
     },
   };
   const data = await fetch(

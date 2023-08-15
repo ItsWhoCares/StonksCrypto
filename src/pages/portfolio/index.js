@@ -13,6 +13,7 @@ export default function Portfolio() {
   const supabase = useSupabaseClient();
   const user = useUser();
   const [portfolio, setPortfolio] = useState();
+
   useEffect(() => {
     if (user) {
       getPortfolio(supabase, user.id).then((data) => {
@@ -73,7 +74,11 @@ export default function Portfolio() {
                                 {coin.symbol}
                               </Link>
                             </td>
-                            <td>{coin.name}</td>
+                            <td>
+                              <Link href={`/coin/${coin.coinUUID}`}>
+                                {coin.name}
+                              </Link>
+                            </td>
 
                             {/* {coin.change < 0 ? (
                               <td style={{ color: "rgb(244, 83, 133)" }}></td>

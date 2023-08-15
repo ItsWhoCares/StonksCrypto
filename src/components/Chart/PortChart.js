@@ -32,7 +32,7 @@ function updateChart() {
 //import Chart from "../../../node_modules/chart.js/dist/Chart.js";
 import Script from "next/script.js";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
-
+import coinName from "./../../pages/api/coinName.json";
 function PortChart() {
   const supabase = useSupabaseClient();
   const user = useUser();
@@ -42,7 +42,17 @@ function PortChart() {
       const transactions = await getUserAllTransactions(supabase, user.id);
       console.log(transactions);
       let balance = 10000;
-      stock_labels = transactions.map((transaction) => transaction.coinUUID);
+      stock_labels = transactions.map((transaction) =>
+        transaction.buyID
+          ? "Sold " +
+            (coinName[transaction.coinUUID] || transaction.coinUUID) +
+            "\n" +
+            formatCurrency(transaction.coinPrice * transaction.quantity)
+          : "Bought " +
+            (coinName[transaction.coinUUID] || transaction.coinUUID) +
+            "\n" +
+            formatCurrency(transaction.coinPrice * transaction.quantity)
+      );
       stock_data = transactions.map((transaction) => {
         balance = transaction.buyID
           ? balance + transaction.coinPrice * transaction.quantity
@@ -187,11 +197,8 @@ function PortChart() {
       </div> */}
       <div
         // className="chart-container"
-        style={{ position: "relative", height: "20vh", width: "35vw" }}>
-        <canvas
-          id="stock_chart"
-          style={{ width: "30vw", height: "20vh" }}
-          className="chartjs-render-monitor"></canvas>
+        style={{ width: "55vw" }}>
+        <canvas id="stock_chart" className="chartjs-render-monitor"></canvas>
       </div>
 
       {/* <div className="Chart__timers"></div> */}

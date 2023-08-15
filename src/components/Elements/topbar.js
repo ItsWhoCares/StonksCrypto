@@ -98,11 +98,14 @@ export default function Topbar() {
           }}>
           <Image
             priority={false}
-            src={"/feedback.png"}
-            width={64}
-            height={78}
+            src={"/github-mark-white.png"}
+            width={230 / 5}
+            height={225 / 5}
             quality={100}
             alt="hehe"
+            onClick={() => {
+              window.open("https://github.com/ItsWhoCares/StonksCrypto");
+            }}
           />
         </motion.div>
       </div>
