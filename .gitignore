@@ -42,3 +42,5 @@ unlighthouse.config.ts
 out.sql
 .unlighthouse
 test.py
+crypto.sql
+schema.sql
