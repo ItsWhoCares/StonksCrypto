@@ -9,7 +9,7 @@ export default function MostActive({ topCoins }) {
         <ul className="panel__list">
           {/* first three topcoins only*/}
           {topCoins.slice(0, 3).map((coin) => (
-            <li>
+            <li key={coin?.uuid}>
               <motion.div
                 animate={{ x: 0, opacity: 1 }}
                 style={{ width: "100%", x: 200, opacity: 0 }}
@@ -20,7 +20,7 @@ export default function MostActive({ topCoins }) {
                   stiffness: 400,
                   damping: 17,
                 }}
-                key={coin?.uuid}>
+                key={coin?.uuid + "div"}>
                 <Link href={`/coin/${coin.uuid}`}>
                   <span className="panel__fullname">
                     <h4>{coin.symbol}</h4>
@@ -59,7 +59,7 @@ export default function MostActive({ topCoins }) {
       <div className="panel__stockList">
         <ul className="panel__list">
           {topCoins.slice(3, 6).map((coin) => (
-            <li>
+            <li key={coin?.uuid}>
               <motion.div
                 animate={{ x: 0, opacity: 1 }}
                 style={{ width: "100%", x: 200, opacity: 0 }}
@@ -70,7 +70,7 @@ export default function MostActive({ topCoins }) {
                   stiffness: 400,
                   damping: 17,
                 }}
-                key={coin?.uuid}>
+                key={coin?.uuid + "div"}>
                 <Link href={`/coin/${coin.uuid}`}>
                   <span className="panel__fullname">
                     <h4>{coin.symbol}</h4>
@@ -109,7 +109,7 @@ export default function MostActive({ topCoins }) {
       <div className="panel__stockList">
         <ul className="panel__list">
           {topCoins.slice(6, 9).map((coin) => (
-            <li>
+            <li key={coin?.uuid}>
               <motion.div
                 animate={{ x: 0, opacity: 1 }}
                 style={{ width: "100%", x: 200, opacity: 0 }}
@@ -120,7 +120,7 @@ export default function MostActive({ topCoins }) {
                   stiffness: 400,
                   damping: 17,
                 }}
-                key={coin?.uuid}>
+                key={coin?.uuid + "div"}>
                 <Link href={`/coin/${coin.uuid}`}>
                   <span className="panel__fullname">
                     <h4>{coin.symbol}</h4>
