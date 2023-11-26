@@ -9,18 +9,18 @@ export default function MostActive({ topCoins }) {
         <ul className="panel__list">
           {/* first three topcoins only*/}
           {topCoins.slice(0, 3).map((coin) => (
-            <motion.div
-              animate={{ x: 0, opacity: 1 }}
-              style={{ width: "100%", x: 200, opacity: 0 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 17,
-              }}
-              key={coin?.uuid}>
-              <li>
+            <li>
+              <motion.div
+                animate={{ x: 0, opacity: 1 }}
+                style={{ width: "100%", x: 200, opacity: 0 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17,
+                }}
+                key={coin?.uuid}>
                 <Link href={`/coin/${coin.uuid}`}>
                   <span className="panel__fullname">
                     <h4>{coin.symbol}</h4>
@@ -51,26 +51,26 @@ export default function MostActive({ topCoins }) {
                     )}
                   </div>
                 </Link>
-              </li>
-            </motion.div>
+              </motion.div>
+            </li>
           ))}
         </ul>
       </div>
       <div className="panel__stockList">
         <ul className="panel__list">
           {topCoins.slice(3, 6).map((coin) => (
-            <motion.div
-              animate={{ x: 0, opacity: 1 }}
-              style={{ width: "100%", x: 200, opacity: 0 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 17,
-              }}
-              key={coin?.uuid}>
-              <li>
+            <li>
+              <motion.div
+                animate={{ x: 0, opacity: 1 }}
+                style={{ width: "100%", x: 200, opacity: 0 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17,
+                }}
+                key={coin?.uuid}>
                 <Link href={`/coin/${coin.uuid}`}>
                   <span className="panel__fullname">
                     <h4>{coin.symbol}</h4>
@@ -101,26 +101,26 @@ export default function MostActive({ topCoins }) {
                     )}
                   </div>
                 </Link>
-              </li>
-            </motion.div>
+              </motion.div>
+            </li>
           ))}
         </ul>
       </div>
       <div className="panel__stockList">
         <ul className="panel__list">
           {topCoins.slice(6, 9).map((coin) => (
-            <motion.div
-              animate={{ x: 0, opacity: 1 }}
-              style={{ width: "100%", x: 200, opacity: 0 }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 17,
-              }}
-              key={coin?.uuid}>
-              <li>
+            <li>
+              <motion.div
+                animate={{ x: 0, opacity: 1 }}
+                style={{ width: "100%", x: 200, opacity: 0 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 17,
+                }}
+                key={coin?.uuid}>
                 <Link href={`/coin/${coin.uuid}`}>
                   <span className="panel__fullname">
                     <h4>{coin.symbol}</h4>
@@ -150,8 +150,8 @@ export default function MostActive({ topCoins }) {
                     )}
                   </div>
                 </Link>
-              </li>
-            </motion.div>
+              </motion.div>
+            </li>
           ))}
         </ul>
       </div>
