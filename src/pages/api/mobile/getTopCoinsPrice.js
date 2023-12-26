@@ -11,7 +11,7 @@ const options = {
 export default async function handler(req, res) {
   //res.status(200).send(testdata);
   const data = await fetch(
-    `https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=${process.env.NEXT_PUBLIC_REFERENCE_CURRENCY_UUID}&timePeriod=24h&tiers%5B0%5D=1&orderBy=price&orderDirection=desc&limit=10&offset=0`,
+    `https://coinranking1.p.rapidapi.com/coins?referenceCurrencyUuid=${process.env.NEXT_PUBLIC_REFERENCE_CURRENCY_UUID}&timePeriod=24h&tiers%5B0%5D=1&orderBy=price&orderDirection=desc&limit=30&offset=0`,
     options
   );
   const json = await data.json();
