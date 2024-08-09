@@ -6,6 +6,27 @@ var chart;
 // const params = new URLSearchParams(window.location.search);
 // console.log(params);
 
+async function getHistoricalData(timePeriod, ctx, drawchart, gradientFill) {
+  return new Promise(async function (resolve) {
+    var response = await fetch(
+      `/api/getHistoricalData?uuid=${symbol}&timePeriod=${timePeriod}`
+    );
+    var res_data = await response.json();
+    stock_labels = res_data.chart["labels"];
+    stock_data = res_data.chart["data"];
+    change = res_data.change;
+    const start = stock_data[0];
+    const end = stock_data[stock_data.length - 1];
+    const gradient2 = ctx.createLinearGradient(0, 0, 600, 10);
+    gradient2.addColorStop(0, start > end > 0 ? "#38f9d7" : "#e74c3c");
+    gradient2.addColorStop(1, start < end > 0 ? "#43e97b" : "#e74c3c");
+    // gradient2.addColorStop(0, start > end > 0 ? "#38f9d7" : "#000000");
+    // gradient2.addColorStop(1, change > 0 ? "#43e97b" : "#e74c3c");
+    drawchart(ctx, gradient2, gradientFill);
+    resolve();
+  });
+}
+
 async function getOneDayChart() {
   return new Promise(async function (resolve) {
     var response = await fetch(`/api/getOneDayData?uuid=${symbol}`);
@@ -219,53 +240,65 @@ function FChart() {
       gradient.addColorStop(1, start < end > 0 ? "#43e97b" : "#e74c3c");
       drawchart(ctx, gradient, gradientFill);
     });
+    const fiveYearBtn = document.getElementById("5y");
+    const threeYearBtn = document.getElementById("3y");
     const yearBtn = document.getElementById("3");
     const monthBtn = document.getElementById("2");
     const dayBtn = document.getElementById("1");
+    const oneHourBtn = document.getElementById("1h");
+
+    fiveYearBtn.addEventListener("click", () => {
+      if (loading) return;
+      loading = true;
+      getHistoricalData("5y", ctx, drawchart, gradientFill).then(
+        () => (loading = false)
+      );
+      changeFocus("5y");
+    });
+
+    threeYearBtn.addEventListener("click", () => {
+      if (loading) return;
+      loading = true;
+      getHistoricalData("3y", ctx, drawchart, gradientFill).then(
+        () => (loading = false)
+      );
+      changeFocus("3y");
+    });
+
     yearBtn.addEventListener("click", () => {
       if (loading) return;
       loading = true;
-      getOneYearChart().then(function () {
-        const start = stock_data[0];
-        const end = stock_data[stock_data.length - 1];
-        const gradient2 = ctx.createLinearGradient(0, 0, 600, 10);
-        gradient2.addColorStop(0, start > end > 0 ? "#38f9d7" : "#e74c3c");
-        gradient2.addColorStop(1, start < end > 0 ? "#43e97b" : "#e74c3c");
-        drawchart(ctx, gradient2, gradientFill);
-        loading = false;
-      });
+      getHistoricalData("1y", ctx, drawchart, gradientFill).then(
+        () => (loading = false)
+      );
       changeFocus(3);
     });
     monthBtn.addEventListener("click", () => {
       if (loading) return;
       loading = true;
-      getOneMonthChart().then(function () {
-        const start = stock_data[0];
-        const end = stock_data[stock_data.length - 1];
-        const gradient2 = ctx.createLinearGradient(0, 0, 600, 10);
-        gradient2.addColorStop(0, start > end > 0 ? "#38f9d7" : "#e74c3c");
-        gradient2.addColorStop(1, start < end > 0 ? "#43e97b" : "#e74c3c");
-        // gradient2.addColorStop(0, start > end > 0 ? "#38f9d7" : "#000000");
-        // gradient2.addColorStop(1, change > 0 ? "#43e97b" : "#e74c3c");
-        drawchart(ctx, gradient2, gradientFill);
-        loading = false;
-      });
+      getHistoricalData("30d", ctx, drawchart, gradientFill).then(
+        () => (loading = false)
+      );
       changeFocus(2);
     });
     dayBtn.addEventListener("click", () => {
       if (loading) return;
       loading = true;
-      getOneDayChart().then(function () {
-        const start = stock_data[0];
-        const end = stock_data[stock_data.length - 1];
-        const gradient2 = ctx.createLinearGradient(0, 0, 600, 10);
-        gradient2.addColorStop(0, start > end > 0 ? "#38f9d7" : "#e74c3c");
-        gradient2.addColorStop(1, start < end > 0 ? "#43e97b" : "#e74c3c");
-        drawchart(ctx, gradient2, gradientFill);
-        loading = false;
-      });
+      getHistoricalData("24h", ctx, drawchart, gradientFill).then(
+        () => (loading = false)
+      );
       changeFocus(1);
     });
+
+    oneHourBtn.addEventListener("click", () => {
+      if (loading) return;
+      loading = true;
+      getHistoricalData("1h", ctx, drawchart, gradientFill).then(
+        () => (loading = false)
+      );
+      changeFocus("1h");
+    });
+
   }, []);
   return (
     <div className="Chart">
@@ -278,12 +311,18 @@ function FChart() {
       </div>
       <canvas id="stock_chart" className="chartjs-render-monitor"></canvas>
       <div className="Chart__timers">
+        <h6 className="Chart__option" id="5y">
+          5Y
+        </h6>
+        <h6 className="Chart__option" id="3y">
+          3Y
+        </h6>
         <h6 className="Chart__option" ref={year} id="3">
           1Y
         </h6>
         <h6
           className="Chart__option"
-          ref={month}
+          // ref={month}
           id="2"
           onClick={() => {
             changeFocus(2);
@@ -293,13 +332,16 @@ function FChart() {
         </h6>
         <h6
           className="Chart__option active"
-          ref={day}
+          // ref={day}
           id="1"
           onClick={() => {
             changeFocus(1);
             getOneDayChart();
           }}>
           1D
+        </h6>
+        <h6 className="Chart__option" id="1h">
+          1H
         </h6>
       </div>
     </div>
