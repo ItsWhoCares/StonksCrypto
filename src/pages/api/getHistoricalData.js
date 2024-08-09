@@ -4,7 +4,6 @@ import timezone from "dayjs/plugin/timezone";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-dayjs.tz.setDefault("Asia/Calcutta");
 
 function formatToChart(data, timePeriod) {
   //format to lables and data
@@ -17,12 +16,16 @@ function formatToChart(data, timePeriod) {
 
   if (timePeriod.includes("h")) {
     data.forEach((item) => {
-      chartData.labels.push(dayjs(item.timestamp * 1000).format("ddd HH:mm"));
+      chartData.labels.push(
+        dayjs.tz(item.timestamp * 1000, "Asia/Calcutta").format("ddd HH:mm")
+      );
       chartData.data.push(item.price);
     });
   } else {
     data.forEach((item) => {
-      chartData.labels.push(dayjs(item.timestamp * 1000).format("MMM YY"));
+      chartData.labels.push(
+        dayjs.tz(item.timestamp * 1000, "Asia/Calcutta").format("MMM YY")
+      );
       chartData.data.push(item.price);
     });
   }
@@ -54,5 +57,6 @@ export default async function oneHistoricalData(req, res) {
     res.status(200).json({
       chart: formatToChart(coin.data.history, timePeriod),
       change: coin.data.change,
+      timezone: dayjs.tz.guess(),
     });
 }
